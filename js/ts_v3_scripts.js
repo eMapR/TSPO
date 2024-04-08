@@ -851,14 +851,11 @@ $("#save").click(function () {
 
 			for (var elem = 0; elem < lis_val.length; elem++){
 				if(lis_val[elem] == '' && elem<10){
-					lis_val[elem]= "no_change"
+					alert("Hello, make sure you completed each attribute option.") 
+					return
 				}
 			}
 
-			if (lis_val.includes('')){
-				alert("Hello, make sure you selected valid_name and confidence.") 
-				return
-			}
 			// find matches in 
 			for (var check = 0; check < Object.values(evenTab).length; check++) {
 				// check for duplicate input in database
