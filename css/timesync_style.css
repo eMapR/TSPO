@@ -1,0 +1,965 @@
+
+
+.collapsible {
+  background-color: #bbbbbb;
+  color: black;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  outline: none;
+  font-size: 12px;
+  border-radius: 5px;
+  margin: 1px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #ebebeb;
+  height: 70%;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 2px;
+}
+
+#biscut{
+    width: 50%;
+    height: 75%;
+	
+}
+
+#mDiv{
+	display:flex;
+	height: inherit;
+}
+
+.map{
+    width: 30em;
+    height: 30em;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+	/*overflow-y: scroll;*/
+	font-size:12px;
+	/*min-ewidth:1150px;*/
+	/*prevent text highlighting on dbl click*/
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* IE/Edge */
+}
+
+ul, li{
+	list-style: none;
+}
+
+#checklist {
+	font-size: initial;
+	height: 100%;
+}
+
+
+
+#toolTips{
+	
+}
+
+.close {
+	cursor: pointer;
+	
+	transform: translate(0%, -30%);
+}
+
+.close:hover {background: #bbb;}
+
+#popUp {
+        float: right;
+	border-radius: 4px;
+	/*height: auto;*/
+       	cursor: pointer;
+	outline: none;
+	transition: 0.4s;
+	height: 50px;
+}
+
+#formId {
+	display: inline;
+}
+
+#lowerLeftCol {
+	width:75%;
+}
+
+
+.headerBtn{
+	background-color: white;
+
+	display: inline-block;
+	padding: 2px 10px;
+	margin-left: 10px;
+
+	font-size: 12px;
+	font-weight: 400;
+
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border-radius: 4px;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+	background-color: #eee;
+	color: #444;
+	cursor: pointer;
+	padding: 5px;
+	width: 100%;
+	/*text-align: left;*/
+	border: inherit;
+	outline: none;
+	transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+	background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+	padding: 0em 0em;
+	background-color: white;
+	display: none;
+	overflow: auto;
+	height: auto;
+	border-color: antiquewhite;
+}
+
+div.panel {
+	display: none;
+}
+
+div.panel.show {
+	display: block !important;
+}
+/*############## CHIP INPUTS ###############################################################*/
+#chipOptionHolder{
+	margin-top:2px;
+	display:inline-block;
+}
+
+.found {
+	background-color: #15dae0;
+}
+
+.founded {
+	background-color: #c8c8c8;
+}
+
+
+.chipOptions{
+	display:inline-block;
+	margin-right:15px;
+}
+
+#chipSize, #plotSize{
+	width:60px;
+}
+
+#zoomSize{
+	display:inline-block;
+	width:75px; 
+	margin-bottom:-4px; 
+}
+
+
+#coordins{
+	margin-left: 10%;
+}
+
+
+
+.colorOptions{
+	width:80px;
+}
+
+.colorOptions input{
+	height:17px;
+	width:30px
+}
+
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+
+.axis text, 
+#specPlotIndex {
+	font-family: sans-serif;
+
+}
+
+#plot{
+}
+
+circle.data{
+	cursor: pointer;
+	stroke:none;
+	stroke-width:2px;
+}
+
+circle.selected{
+	stroke:#ED2939; /*#ED2939; '#FF0000;*/
+	/*stroke-width:2;*/
+}
+
+circle.highlight{
+	stroke:#32CD32; /*'#FF0000;*/
+	stroke-width:5;
+}
+
+/*circle.data:hover{
+	stroke:#ED2939;
+	stroke-width:1;
+}*/
+
+svg{
+	margin:-1px;
+	cursor: n-resize;
+	display: block;
+	/*width: 100%;*/
+}
+#svg{
+	width: 100%;
+}
+
+#xybox{
+	cursor: move;
+}
+#xbox{
+	cursor: ew-resize;
+}
+#ybox{
+	cursor: ns-resize;
+}
+
+#plotLine{
+	stroke:#ED2939; /*'#FF0000;*/
+	stroke-width:2px;
+	fill:none;
+	pointer-events: auto;
+	
+}
+
+.vline{				
+	stroke: #e9e9e9;
+	shape-rendering: crispEdges;
+}
+
+.tick line{
+  	stroke: #e9e9e9;
+	shape-rendering: crispEdges;  
+}
+/*###########################################################################################*/
+#hholder{
+	display: flex
+}
+
+#listOne {
+	display: grid;
+    	overflow: auto;
+	padding-left: 5px;
+        height: 100%;
+}
+
+#lowerCol {
+	display: flex;
+	height: 80%;
+	padding-top:4px;
+	width: 50%
+}
+
+.spinner {
+   width: 56px;
+   height: 56px;
+   display: grid;
+   color: #474bff;
+   background: radial-gradient(farthest-side, currentColor calc(100% - 6.7px),#0000 calc(100% - 5.6px) 0);
+   -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 14.6px),#000 calc(100% - 13.4px));
+   border-radius: 50%;
+   animation: spinner-sm4bhi 2s infinite linear;
+}
+
+.spinner::before,
+.spinner::after {
+   content: "";
+   grid-area: 1/1;
+   background: linear-gradient(currentColor 0 0) center,
+          linear-gradient(currentColor 0 0) center;
+   background-size: 100% 11.2px,11.2px 100%;
+   background-repeat: no-repeat;
+}
+
+.spinner::after {
+   transform: rotate(45deg);
+}
+
+@keyframes spinner-sm4bhi {
+   100% {
+      transform: rotate(1turn);
+   }
+}
+
+#loader {
+  position: absolute;
+  z-index: 999;
+  top: 60%;
+  left: 45%;
+  margin: -100px 0 0 -150px;
+  background: #afafaf;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+
+/*############## CHIP GALLERY ###############################################################*/
+#checkSection,#checkListSection,#infoSection,#infoSection2,#chipGallerySection{
+}
+
+#checkListSection{
+  margin-top: 5px;
+  height: 100%;
+
+
+}
+
+#chipGallerySection{
+	margin: 3px;
+}
+
+#lowerRightCol{
+	margin: 3px 0px;
+	width: 25%;
+}
+
+#infoSection {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#chip-gallery{
+	width:100%;
+	overflow-x: scroll;
+}
+
+
+canvas{
+	border-style:groove;
+
+}
+
+/*#chip-gallery canvas{
+	display:inline;
+	margin:3px;
+	vertical-align:top;
+	cursor: pointer;
+	border: 3px solid white;
+}*/
+
+.chipHolder{
+	display:table-cell;
+	margin:3px;
+	border: 3px solid white;
+	box-shadow:rgba(0, 0, 0, 0.176) 0px 1px 2px 0px;
+}
+
+.chipImg{
+	cursor: pointer;
+}
+
+.chipDate{
+	text-align: center;
+	margin-top:-3px;
+	cursor:default;
+}
+
+#chip-gallery .selected{
+	border: 3px solid #ED2939; /*black;*/
+}
+
+.chipHolder .highlight{
+	border: 3px solid #32CD32;
+}
+
+.expandChipYear{
+	visibility: hidden;
+	cursor: pointer;
+}
+
+.chipHolder:hover .expandChipYear{
+	visibility: visible;
+}
+
+/*#################################################################################################*/
+
+
+
+#img-gallery{
+	display:none;
+}
+.chipImgSrc{
+	display:none;
+}
+
+
+/*############## SECTION COMPONENTS ###############################################################*/
+#topSection{
+	/*width:100%;*/
+	margin:3px 3px 0px 3px;
+	box-shadow:rgba(0, 0, 0, 0.176) 1px 1px 1px /*grey*/;
+	vertical-align:top;
+	border:1px solid #afafaf; /*#dbdbdb;*/
+	border-radius: 4px;
+	padding: 3px;
+	display: flex;
+}
+
+#topSection p{
+	margin-bottom:5px;
+}
+
+#title{
+	font-weight:bold;
+	font-size:12px;
+	padding-left:3px;
+	margin:0px 40px 0px 0px;
+	
+}
+
+
+
+#containerDiv{
+	display:block;
+	border-spacing: 3px 3px;
+	width: 50%;
+}
+
+#plotSelectionDiv{
+/*	min-width:150px; /*55*/
+/*	width:auto;	 /*55*/
+}
+
+#plotList{
+	list-style-type: none;
+ 	padding-left:0px;
+	margin:0px;
+	overflow: auto;
+}
+#plotList li{
+	padding-left:2px;
+	padding-right:2px;
+	cursor:pointer;
+	white-space:nowrap
+}
+
+#plotList .done{
+	background-color:#32CD32;
+}
+
+#plotList .selected{
+	background-color: #7cdbab /*#F1F1F1;*/
+}
+
+.glyphicon-none:before {
+    content:"\e013";
+    color:transparent !important;
+}
+
+.glyphicon {
+	font-size: 12px;
+}
+
+
+
+
+.test{
+	text-align: right;
+	margin-top:1px;
+	padding-left:0px;
+	margin-bottom:0px;
+	margin-right:-1px;
+}
+.test li{
+	/*text-align: left;*/
+	width: 75px;
+	display: inline-block;
+	/*font-size:12px;*/
+	font-weight: bold;
+	padding: 0px 3px 3px 3px;
+	border: 1px solid #afafaf;
+	cursor: pointer;
+}
+
+.test li.selected{
+	background-color:#dbdbdb; /*#f1f1f1;*/
+}
+
+
+
+#infoSection2,#infoSection, .header{
+	margin-bottom:1px;
+}
+
+#infoSection{
+        width:100%;
+}
+#infoSection2{
+	height: 100%;
+	overflow-y:scroll;
+}
+
+
+#gDoc{
+        width:100%;
+	height:100%;
+}
+
+.subHeader{
+
+	padding-left:3px;
+	font-weight: bold;
+	margin-bottom:1px;
+	padding-bottom:3px;
+}
+
+.sectionDiv{	
+	display: table-cell;
+	vertical-align:top;
+	border:1px solid #afafaf;
+	border-radius: 4px;
+	box-shadow: rgba(0, 0, 0, 0.176) 1px 1px 1px /*grey*/;
+}
+
+#commentsSection{
+	width:100%;
+}
+
+tr.active{
+	background-color:#32CD32;
+}
+/*#########################################################################################*/
+
+.formDropSelection{
+	border:1px solid #afafaf;
+	margin:3px 3px 3px 3px; /*0px,3px,3px,3px*/
+	cursor:pointer;
+	padding-left:3px;
+	height:17px; /*20px;*/
+	
+}
+
+.LUlist, #landCoverList { /*#landUseList*/
+	list-style-type: none;
+ 	padding-left:0px;
+	font-size: 12px;
+	border:1px solid #afafaf;
+	border-radius:0px 0px 4px 4px;
+	margin-top:-3px;
+	/*margin:3px 3px 3px 3px;*/
+	height:175px;
+	overflow: scroll;
+	overflow-x:hidden;
+}
+
+
+#changeProcessList{
+	/*display:none;*/
+	list-style-type: none;
+ 	padding-left:0px;
+	font-size: 12px;
+	border:1px solid #afafaf;
+	border-radius:0px 0px 4px 4px;
+	margin:-3px 3px 3px 3px; /*3px*/
+	height:175px;
+}
+
+.notesList{ /*, #LUnotesList, #LCnotesList*/
+	border:1px solid #afafaf;
+	border-radius:0px 0px 4px 4px;
+	margin-top:-3px;
+	/*margin:-4px 3px 3px 3px;*/
+	list-style-type: none;
+ 	padding-left:0px;
+	font-size: 12px;
+	height:150px; /*113*/
+}
+
+#CPnotesList{
+	border:1px solid #afafaf;
+	border-radius:0px 0px 4px 4px;
+	margin:-3px 3px 3px 3px;
+	list-style-type: none;
+ 	
+	font-size: 12px;
+	height:192px;
+}
+
+#LUnotesList li, #LCnotesList li, #CPnotesList li{
+	cursor:default;
+}
+
+.disabled{
+	color:#afafaf;
+	cursor:not-allowed;
+	pointer-events: none;
+}
+.disabled:hover{
+	background-color:white;
+	cursor:not-allowed;
+}
+
+.notesList .selected{
+	background-color:#dbdbdb;
+}
+
+#changeProcessList .selected, #landUseList .selected, #landCoverList .selected, #landUseListSec .selected{
+	background-color:#dbdbdb;
+}
+
+
+
+
+#luLevelSwitchHolder{margin:0px 0px -1px 0px;}
+#luLevelSwitchHolder li{
+	/*text-align: left;*/
+	display: inline-block;
+	border: 1px solid #afafaf;
+	width:106px;
+	/*font-size:12px;*/
+	/*font-weight: bold;*/
+	/*padding: 0px 3px 3px 3px;*/
+	border: 1px solid #afafaf;
+	cursor: pointer;
+	/*width:67.5px;*/
+	
+}
+
+#luLevelSwitchHolder li.selected{
+	background-color:#dbdbdb;
+}
+
+#lcLevelSwitchHolder{
+	margin:0px 0px 2px 0px;
+	cursor: default;
+}
+#lcLevelSwitchHolder li{
+	/*padding: 0px 3px 3px 3px;*/
+	display: inline-block;
+	border: 1px solid #afafaf;
+	width:106px;
+	background-color:#dbdbdb; /*#f1f1f1;*/
+	cursor: default;
+	font-weight:bold;
+}
+
+#contextMenu{
+	border: 1px solid #afafaf;
+	border-radius:4px 4px 4px 4px;
+	background-color:#dbdbdb;
+	/*background-color:rgba(200,200,200, 0.75);*/
+	width:115px;
+	height:75px;
+	
+}
+
+#contextMenuList{
+	list-style-type: none;
+	cursor: pointer;
+	padding-left:0px;
+	background-color:#ffffff;
+}
+
+#contextMenuList li{padding-left:3px;}
+
+
+
+
+/*#landUseListSec .selected{
+	background-color:#dbdbdb;
+}*/
+
+
+/*#LCnotesList{
+	height:100px;
+}*/
+
+.glyphicon.glyphicon-search{
+	font-size:12px;
+}
+.highlightIt{
+	cursor:pointer;
+}
+
+
+
+/*############## VERTICES FORM ####################################################*/
+
+#formsDiv{
+}
+
+
+
+/*.doneBtn{
+	border:1px solid #afafaf;
+	border-radius:4px;
+	margin:7px 3px 3px 3px;
+	text-align:center;
+	font-weight: bold;
+	cursor:pointer;
+	height:40px;
+	padding-top:10px;
+}
+.doneBtn:hover{
+	background-color:#f1f1f1;
+}
+*/
+
+.formDrop{
+	cursor:pointer;
+}
+
+/*#########################################################################################*/
+
+/*############## COMMENTS SECTION ####################################################*/
+.listFormat{
+	list-style-type: none;
+ 	padding-left:0px;
+	margin:0px;
+}
+
+
+
+.tableDisplay{
+	display:table;
+	border-spacing: 0px;
+	margin-left:3px;
+}
+
+
+#commentInput{
+	height:228px;
+	width:100%;
+	resize: none;
+}
+
+#commentInputDiv{
+	margin:3px 3px 3px 3px;
+}
+
+#exampleCheckBox{
+	margin-left:6px;
+	margin-bottom:4px;
+}
+
+/*############## TRAJECTORY PLOT BUTTONS ####################################################*/
+
+button:focus {outline:none !important;}
+
+li:hover{
+	background-color:#f1f1f1;
+}
+
+.dropdown-menu .active{
+	background-color:#dbdbdb;
+}
+.dropdown-menu li{ /*.plot*/
+	font-size:12px;
+	padding-left:5px;
+	cursor:pointer;
+	width:auto; /*substract 1 from .dropdown button width because of border*/
+}
+.dropdown-menu { /*.plot*/
+	margin-top: 0;
+	min-width:10em;
+}
+			
+.specPlotDrop:hover .dropdown-menu {
+	display: block;
+}
+
+.editor:hover .dropdown-menu {
+	display: block;
+}
+
+
+.specPlotBtn{
+	border: 1px solid black;
+	font-size:12px;
+	/*padding:0px 0px 0px 0px;*/
+	width:auto;
+	height:51px;
+	background-color: #bbbbbb;
+}
+
+.specPlotBtn:focus {
+    color: #333;
+    background-color: #bbbbbb;
+    border-color: #bbbbbb;
+}
+
+.buttonText{margin-right:2px;}
+
+.caret.specPlot {
+	position: absolute;
+	left: 80%;
+	top: 65%;
+}
+
+.caret.projBtn {
+	position: absolute;
+	left: 87%;
+	top: 40%;
+}
+
+.caret.helpBtn {
+	position: absolute;
+	left: 70%;
+	top: 40%;
+}
+
+/*#########################################################################################*/
+
+
+
+/*############## SEGMENTS TABLE ###########################################################*/
+table, th, td {
+	margin:-1px;
+	border: 1px solid #afafaf;
+	border-collapse: collapse;
+	
+}
+
+
+table td, table th{
+	padding-left:3px;
+}
+
+#segmentsFormDiv, #verticesFormDiv {
+	min-height: 280px;
+	max-height: 280px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#segmentsFormTbl, #verticesFormTbl, #CommentsFormDiv{
+	width:320px
+}
+
+#verticesFormDiv{
+	display:none;
+}
+
+#CommentsFormDiv{
+	display:none;
+	margin:-1px;
+	border-top: 1px solid #afafaf;
+}
+
+.trHeader{
+	background-color:#dbdbdb; /*#f1f1f1;*/
+}
+
+#changeProcessList ul{
+	
+	list-style-type: none;
+ 	padding-left:0px;
+	margin:0px;
+	
+}
+
+
+.dropThis{
+	display:none;
+	background-color:white;
+	border:1px solid #afafaf;
+	border-radius:0px 0px 4px 4px;
+	box-shadow:rgba(0, 0, 0, 0.176) 0px 6px 12px 0px;
+}
+.dropThis ul{
+	list-style-type: none;
+ 	padding-left:0px;
+	margin:0px;
+	margin-bottom:3px;
+}
+.dropThis li{
+	padding-left:3px;
+	cursor:pointer;
+}
+
+/*#########################################################################################*/
+.dropbtn {
+    border: 1px solid #afafaf;
+    font-size: 12px;
+    text-align: left;
+    /*width: 100px;*/
+    height: 35px;
+}
+
+.dropdown {
+    position: relative;
+    /*display: inline-block;*/
+    /*width:1em;*/
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 65%;
+    z-index: 9999;
+    background: white;
+    border-radius: 5px;
+    border: solid;
+    border-color: #afafaf;
+    border-width: 1px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+#save{
+    margin: 7px;
+}
