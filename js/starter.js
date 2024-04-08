@@ -1,5 +1,6 @@
 	// path to tile mapping service
-        var tilePath = "https://emapr.ceoas.oregonstate.eud:/pages/tools/tspo/bnet_tspo/data/tms2";
+        //var tilePath = "../data/training/tms_12";
+        var tilePath = "/pages/tools/servir/ltop_change_detection_validation/data/tms_10";
         //var zoomTileMac = tilePath +"/tms/rgbTC/1995/";
 
 	// data holders - init vars to hold the database information like polygon coordinates, display button optons, and storage for user inputs
