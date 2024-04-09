@@ -31,6 +31,24 @@
 
 
 <script>
+
+	// Parse the query string parameters
+	const urlString = new URLSearchParams(window.location.search);
+
+	// Get the specific parameter value
+	const urlvalue = urlString.get("para");
+
+	// Check if the parameter exists and split if necessary
+	if (urlvalue) {
+	    const urls = urlvalue.split(":");
+            const projectName = urls[0]
+            const dataName = urls[1]
+	    // Now you can use 'urls' array as needed
+	} else {
+	    console.log("Parameter 'para' not found in the URL");
+	}
+
+
         function openPopup() {
             // Define the URL of the popup content
             var popupURL = 'popup.html';
@@ -44,9 +62,9 @@
 
                 // Get the content to copy
                 var contentToCopy = document.getElementById('chip-gallery');
-		console.log(contentToCopy)
+		//console.log(contentToCopy)
                 if (contentToCopy) {
-		    console.log(1)
+		    //console.log(1)
                     // Clone the content and append it to the popup window's document
                     var clonedContent = contentToCopy.cloneNode(true);
                     popupWindow.document.body.appendChild(clonedContent);
