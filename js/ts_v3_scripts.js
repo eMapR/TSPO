@@ -100,8 +100,22 @@ var placed = {}
 
 
 
+function getTimeDifference(time1, time2) {
+    const date1 = new Date(time1);
+    const date2 = new Date(time2);
 
-function plottime(){}
+    // Calculate the difference in milliseconds
+    const differenceMs = Math.abs(date2 - date1);
+
+    // Convert the difference to hours, minutes, and seconds
+    const hours = Math.floor(differenceMs / (1000 * 60 * 60));
+    const minutes = Math.floor((differenceMs % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((differenceMs % (1000 * 60)) / 1000);
+
+    return { hours, minutes, seconds };
+}
+
+
 
 //setup the domains - for spectral plotting
 //var date = new Date();
@@ -825,6 +839,8 @@ $("#save").click(function () {
 
 			time2 = Date()
 			timeStamp2 = time2.slice(4,24)
+                        var timeDifference = getTimeDifference(time1, time2);
+                        console.log(timeDifference)
 
 			// MAKE LIST OF ATTRIBUTE COLUMNS (WITH MATCHING INDEX OF VALUES) THIS WILL EXPAND TO MATCH THE NUMBER OF USET DEFINVE ATTRIBUTE BUTTONS
 			var lis_col = ["0","1","2","3"]
