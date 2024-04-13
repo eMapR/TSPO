@@ -865,7 +865,8 @@ $("#save").click(function () {
 							remover_list = [sessionInfo.plotID, userID]
                 					var remover = JSON.stringify(remover_list)
                 					$.post("./php/removeRow.php",
-                        					remover,
+                        					//remover,
+                        					{path:db_path,rmr:remover},
                         					function(message, status) {
                                 					console.log(message);
                                 					console.log(status);
