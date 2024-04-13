@@ -20,7 +20,7 @@
 
 
 	// This function get the display table database, data that holds the label names, and stores it in memory.
-	$.post( "./php/get_display_table.php", function(data) {
+	$.post( "./php/get_display_table.php",{path:db_path} , function(data) {
 		data1 = "[" +data+ "]";
 		data2 = data1.replace(/}{/g,"},{")
 		displayTab = JSON.parse(data2);
