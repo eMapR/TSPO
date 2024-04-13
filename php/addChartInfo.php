@@ -9,7 +9,7 @@ function debug_to_console($data) {
 try {
     // Get user IP Address and request time
     $ip = $_SERVER['REMOTE_ADDR'];
-    $time = $_SERVER['REQUEST_TIME'];
+    //$time = $_SERVER['REQUEST_TIME'];
 
     // Get chart info from web page
     $raw_post_string = file_get_contents('php://input');

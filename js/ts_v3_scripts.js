@@ -121,9 +121,10 @@ function getData(sessionInfo, specIndex, activeRedSpecIndex, activeGreenSpecInde
                 res = JSON.parse(data2);
                 // add plot ids to list plotInfo
                 res_len = Object.keys(res).length;
+                console.log(res)
         })
 
-        var jqxhr2 = $.post( "./php/get_event_table.php", function(data) {
+        var jqxhr2 = $.post( "./php/get_event_table.php",{path:db_path}, function(data) {
                 data1 = "[" +data+ "]";
                 data2 = data1.replace(/}{/g,"},{")
                 evenTab = JSON.parse(data2);
@@ -895,7 +896,7 @@ $("#save").click(function () {
                 		res_len = Object.keys(res).length;
         		})
 
-        		$.post( "./php/get_event_table.php", function(data) {
+        		$.post( "./php/get_event_table.php",{path:db_path}, function(data) {
                 		data1 = "[" +data+ "]";
                 		data2 = data1.replace(/}{/g,"},{")
                 		evenTab = JSON.parse(data2);

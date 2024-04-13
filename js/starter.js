@@ -12,7 +12,7 @@
 
 
 	// This function get the event table database, data that has been labeled by a user, and stores it in memory.
-	$.post( "./php/get_event_table.php", function(data) {
+	$.post( "./php/get_event_table.php",{path:db_path}, function(data) {
 		data1 = "[" +data+ "]";
 		data2 = data1.replace(/}{/g,"},{")
 		evenTab = JSON.parse(data2);

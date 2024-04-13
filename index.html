@@ -8,8 +8,6 @@
 	<script src="./node_modules/jquery/dist/jquery.js"></script>
 	<script src="./node_modules/d3/d3.js"></script>
 	<script type="text/javascript" src="./node_modules/dompurify/dist/purify.min.js"></script>
-	<script type="text/javascript" src="./js/starter.js"></script>
-	<script type="text/javascript" src="./js/propBoxClass.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -37,12 +35,14 @@
 
 	// Get the specific parameter value
 	const urlvalue = urlString.get("para");
-
+        var db_path;
 	// Check if the parameter exists and split if necessary
 	if (urlvalue) {
 	    const urls = urlvalue.split(":");
             const projectName = urls[0]
             const dataName = urls[1]
+            console.log(projectName,dataName)
+            db_path = "/var/www/emapr/pages/tools/tspo/neo_tspo/data/"+projectName+"/db/"+dataName+".db"
 	    // Now you can use 'urls' array as needed
 	} else {
 	    console.log("Parameter 'para' not found in the URL");
@@ -75,6 +75,8 @@
         }
 	}
 </script>
+<script type="text/javascript" src="./js/starter.js"></script>
+<script type="text/javascript" src="./js/propBoxClass.js"></script>
 </head>
 <body>
 
