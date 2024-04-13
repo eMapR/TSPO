@@ -728,6 +728,7 @@ $(".table li").click(function (e) {
 //--------------------------------------------------------------------------------------------------------
 // HERE 
 function insertRow() {
+
     const displayTabKeys = Object.keys(displayTab[0]);
     const displayBtnNames = displayTabKeys.filter(key => key.length > 2);
     const displayValueNames = displayBtnNames.map(key => displayTab[0][key]).filter(Boolean);
@@ -810,25 +811,26 @@ function insertRow() {
         });
     }
 
+    time1 = Date()
+    timeStamp1 = time1.slice(4,24)
 
 //--------------------------------------------------------------------------------------------------------
 
 // save button
 $("#save").click(function () {
-        $('.selected span').removeClass('glyphicon-none').addClass('glyphicon glyphicon-ok')
 	// here we loop the number plots. 
 	for (var i = 0; i < Object.keys(res).length; i++) {
 		// look for a condistion where the selected plot matches a plot in the plot id list
 		if (res[i][1] === sessionInfo.plotID) {
 
-			time = Date()
-			timeStamp = time.slice(4,24)
+			time2 = Date()
+			timeStamp2 = time2.slice(4,24)
 
 			// MAKE LIST OF ATTRIBUTE COLUMNS (WITH MATCHING INDEX OF VALUES) THIS WILL EXPAND TO MATCH THE NUMBER OF USET DEFINVE ATTRIBUTE BUTTONS
 			var lis_col = ["0","1","2","3"]
 
 			// MAKE LIST OF ATTRIBUTE VALUES (WITH MATCHING INDEX OF COLUMNS)
-			var lis_val = [1, sessionInfo.plotID, timeStamp, origData[0].target_day.toString()];
+			var lis_val = [1, sessionInfo.plotID, timeStamp2, origData[0].target_day.toString()];
 
 			// ADD USER SELECTED ATTRIBUTES TO DATA LIST. THE DATA LIST WILL BE A ROW IN THE DATABASE TABLE
 			$(".dropdown div").each(function(){
@@ -884,7 +886,8 @@ $("#save").click(function () {
         console.log(lis_val)
         var holder = JSON.stringify(lis_val)
         $.post("./php/addChartInfo.php",
-                holder,
+                {path:db_path,holds:holder},
+                //holder,
                 function(message, status) {
 
         		// Assign handlers immediately after making the request,
@@ -904,6 +907,7 @@ $("#save").click(function () {
         		})
         	});
         listObj = []
+        $('.selected span').removeClass('glyphicon-none').addClass('glyphicon glyphicon-ok')
     });
 
     globalStretch();
