@@ -30,7 +30,7 @@
 	// process the data from the database into a readable format for the program. Then get the number of objects
 	// in the data and append the each objects plot id to an array. Lastly, add the plots (objects) to the DOM 
 	// with appendPlots().
-	$.post( "./php/get_polygon_table.php", function(data) {
+	$.post( "./php/get_polygon_table.php",{path:db_path}, function(data) {
 
 		// formating data
 		data1 = "[" +data+ "]";

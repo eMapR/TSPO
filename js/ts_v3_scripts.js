@@ -115,7 +115,7 @@ function getData(sessionInfo, specIndex, activeRedSpecIndex, activeGreenSpecInde
 
         // Assign handlers immediately after making the request,
         // and remember the jqxhr object for this request
-        var jqxhr1 = $.post( "./php/get_polygon_table.php", function(data) {
+        var jqxhr1 = $.post( "./php/get_polygon_table.php", {path:db_path}, function(data) {
                 data1 = "[" +data+ "]";
                 data2 = data1.replace(/}{/g,"},{")
                 res = JSON.parse(data2);
@@ -888,7 +888,7 @@ $("#save").click(function () {
 
         		// Assign handlers immediately after making the request,
         		// and remember the jqxhr object for this request
-        		$.post( "./php/get_polygon_table.php", function(data) {
+        		$.post( "./php/get_polygon_table.php",{path:db_path}, function(data) {
                 		data1 = "[" +data+ "]";
                 		data2 = data1.replace(/}{/g,"},{")
                 		res = JSON.parse(data2);
