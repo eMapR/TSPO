@@ -112,10 +112,11 @@ function getTimeDifference(time1, time2) {
     const minutes = Math.floor((differenceMs % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((differenceMs % (1000 * 60)) / 1000);
 
-    return { hours, minutes, seconds };
+    // Format the time difference as 'hour:min:sec'
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    return formattedTime;
 }
-
-
 
 //setup the domains - for spectral plotting
 //var date = new Date();
@@ -866,6 +867,7 @@ $("#save").click(function () {
 
 			})
 			lis_val.push(userID)
+			lis_val.push(timeDifference)
 
 
 			for (var elem = 0; elem < lis_val.length; elem++){

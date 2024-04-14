@@ -36,6 +36,7 @@
 	// Get the specific parameter value
 	const urlvalue = urlString.get("para");
         var db_path;
+        var tilePath;
 	// Check if the parameter exists and split if necessary
 	if (urlvalue) {
 	    const urls = urlvalue.split(":");
@@ -43,6 +44,7 @@
             const dataName = urls[1]
             console.log(projectName,dataName)
             db_path = "/var/www/emapr/pages/tools/tspo/neo_tspo/data/"+projectName+"/db/"+dataName+".db"
+            tilePath = "/pages/tools/tspo/neo_tspo/data/"+projectName+"/tms"
 	    // Now you can use 'urls' array as needed
 	} else {
 	    console.log("Parameter 'para' not found in the URL");
