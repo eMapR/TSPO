@@ -3,7 +3,10 @@ class PropBox {
   constructor(parentElement, itemString) {
     this.selectedColors = [];
     this.parentElement = parentElement || document.body;  // Default to document.body if no parentElement provided
-    this.items = itemString.split(',').map(item => item.trim());  // Split string into array and trim whitespace
+
+    this.itemsfull = itemString.split(',').map(item => item.trim());  // Split string into array and trim whitespace
+    this.items = this.removeElement(this.itemsfull,"Prop")  // Split string into array and trim whitespace
+
     this.colorMap = this.generateColorMap(this.items);
     this.initDOM();
     this.label;
@@ -11,8 +14,13 @@ class PropBox {
     console.log(parentElement)
   }
 
+  // Function to remove an element by name
+  removeElement(array, elementName) {
+    return array.filter(item => item !== elementName);
+  }
+
   generateColorMap(items) {
-    const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'magenta'];  // Define more colors as needed
+    const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'cyan', 'magenta', 'black'];  // Define more colors as needed
     let colorMap = {};
     items.forEach((item, index) => {
       colorMap[item] = colors[index % colors.length];

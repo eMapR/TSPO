@@ -616,10 +616,10 @@ $("#LayerSetList").on('click', function () {
 			let rgb6 = "rgb654_" + w + ".setOpacity(0)";
 			eval(rgb6)
 		}
-	//	for (var ww = cat; ww <= mapNumber; ww++) {
-	//		let rgb5 = "rgb543_" + ww + ".setOpacity(0)";
-	//		eval(rgb5)
-	//	}
+		for (var ww = cat; ww <= mapNumber; ww++) {
+			let rgb5 = "rgb543_" + ww + ".setOpacity(0)";
+			eval(rgb5)
+		}
 		for (var www = cat; www <= mapNumber; www++) {
 			let rgb4 = "rgb432_" + www + ".setOpacity(0)";
 			eval(rgb4)
@@ -635,10 +635,10 @@ $("#LayerSetList").on('click', function () {
 			let rgbT = "rgbTC_" + h + ".setOpacity(0)";
 			eval(rgbT)
 		}
-	//	for (var hh = cat; hh <= mapNumber; hh++) {
-	//		let rgb5 = "rgb543_" + hh + ".setOpacity(0)";
-	//		eval(rgb5)
-	//	}
+		for (var hh = cat; hh <= mapNumber; hh++) {
+			let rgb5 = "rgb543_" + hh + ".setOpacity(0)";
+			eval(rgb5)
+		}
 		for (var hhh = cat; hhh <= mapNumber; hhh++) {
 			let rgb4 = "rgb432_" + hhh + ".setOpacity(0)";
 			eval(rgb4)
@@ -648,24 +648,24 @@ $("#LayerSetList").on('click', function () {
 			eval(rgb6)
 		}
 	// if 543 layer is selected change the opacity of the all other layers to 0 
-	//} else if (edityod === 'rgb543') {
+	} else if (edityod === 'rgb543') {
 
-	//	for (var b = cat; b <= mapNumber; b++) {
-	//		let rgb6 = "rgb654_" + b + ".setOpacity(0)";
-	//		eval(rgb6)
-	//	}
-	//	for (var bb = cat; bb <= mapNumber; bb++) {
-	//		let rgbT = "rgbTC_" + bb + ".setOpacity(0)";
-	//		eval(rgbT)
-	//	}
-	//	for (var bbb = cat; bbb <= mapNumber; bbb++) {
-	//		let rgb4 = "rgb432_" + bbb + ".setOpacity(0)";
-	//		eval(rgb4)
-	//	}		
-	//	for (var bbbb = cat; bbbb <= mapNumber; bbbb++) {
-	//		let rgb5 = "rgb543_" + bbbb + ".setOpacity(1)";
-	//		eval(rgb5)
-	//	}
+		for (var b = cat; b <= mapNumber; b++) {
+			let rgb6 = "rgb654_" + b + ".setOpacity(0)";
+			eval(rgb6)
+		}
+		for (var bb = cat; bb <= mapNumber; bb++) {
+			let rgbT = "rgbTC_" + bb + ".setOpacity(0)";
+			eval(rgbT)
+		}
+		for (var bbb = cat; bbb <= mapNumber; bbb++) {
+			let rgb4 = "rgb432_" + bbb + ".setOpacity(0)";
+			eval(rgb4)
+		}		
+		for (var bbbb = cat; bbbb <= mapNumber; bbbb++) {
+			let rgb5 = "rgb543_" + bbbb + ".setOpacity(1)";
+			eval(rgb5)
+		}
 	// if 432 layer is selected change the opacity of the all other layers to 0 
 	} else if (edityod === 'rgb432') {
 
@@ -677,10 +677,10 @@ $("#LayerSetList").on('click', function () {
 			let rgbT = "rgbTC_" + gg + ".setOpacity(0)";
 			eval(rgbT)
 		}
-	//	for (var ggg = cat; ggg <= mapNumber; ggg++) {
-	//		let rgb5 = "rgb543_" + ggg + ".setOpacity(0)";
-	//		eval(rgb5)
-	//	}
+		for (var ggg = cat; ggg <= mapNumber; ggg++) {
+			let rgb5 = "rgb543_" + ggg + ".setOpacity(0)";
+			eval(rgb5)
+		}
 		for (var gggg = cat; gggg <= mapNumber; gggg++) {
 			let rgb4 = "rgb432_" + gggg + ".setOpacity(1)";
 			eval(rgb4)
@@ -791,6 +791,7 @@ function insertRow() {
         }
 
     }
+
 
     for (let i = 0; i < valueArr.length; i++) {
         if (valueArr[i].includes('comment')) {

@@ -63,65 +63,49 @@ function mapstuff() {
     var cat = 0;
     get_centroid()
 
-
-    // finds the first image year occurance in a string 
-    //ti = res[0][3].search('image_year')+12
-    //console.log(ti)
-    //ti4 = ti +4
-    //console.log(ti4)
-
-    //endImageYearFirstIndex = res[0][3].lastIndexOf('image_year')+12
-    //console.log(endImageYearFirstIndex)
-    //endimageYearLastIndex = endImageYearFirstIndex + 4
-    //console.log(endimageYearLastIndex)
-    //mapNumber =  res[0][3].slice(endImageYearFirstIndex,endimageYearLastIndex) - res[0][3].slice(ti,ti4)
-    //console.log(mapNumber)
-    //beginYear = res[0][3].slice(endImageYearFirstIndex,endimageYearLastIndex) - mapNumber
-
-
-
     mapNumber =  JSON.parse(res[0][3]).length-1
     console.log(mapNumber)
     beginYear = JSON.parse(res[0][3])[0]['image_year']
     console.log(beginYear)
 
     $('#mapid').remove();
-    //heig= $("#svg").css("height")
+
     heig= $("#svg").height()
+
     widh= $("#formsDiv").width()-8
+
     $('#formsDiv').append('<div id="mapid" style="width:'+widh+'px; height:'+heig+'px;"></div>')
-    //$('#formsDiv').append('<div id="mapid" style="width:100%; height:100%;"></div>')
+
     // current imagery map
-    var airImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 18,
-        id: 'mapbox.streets'
-    });
+    var airImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {maxZoom: 18});
 
-    var nicfi_1 = L.tileLayer(tilePath +"/nicfi/2017/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-    var nicfi_2 = L.tileLayer(tilePath +"/nicfi/2018/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-    var nicfi_3 = L.tileLayer(tilePath +"/nicfi/2019/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-    var nicfi_4 = L.tileLayer(tilePath +"/nicfi/2020/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-    var nicfi_5 = L.tileLayer(tilePath +"/nicfi/2021/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-    var nicfi_6 = L.tileLayer(tilePath +"/nicfi/2022/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-    var nicfi_7 = L.tileLayer(tilePath +"/nicfi/2023/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-    var nicfi_8 = L.tileLayer(tilePath +"/nicfi/2024/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-    var nicfi_9 = L.tileLayer(tilePath +"/nicfi/2025/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+    var opMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 });
 
+    var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 18});
 
+    if (highRes === "NICFI"){
 
-    var opMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
+        var nicfi_1 = L.tileLayer(tilePath +"/nicfi/2017/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_2 = L.tileLayer(tilePath +"/nicfi/2018/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_3 = L.tileLayer(tilePath +"/nicfi/2019/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_4 = L.tileLayer(tilePath +"/nicfi/2020/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_5 = L.tileLayer(tilePath +"/nicfi/2021/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_6 = L.tileLayer(tilePath +"/nicfi/2022/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_7 = L.tileLayer(tilePath +"/nicfi/2023/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_8 = L.tileLayer(tilePath +"/nicfi/2024/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_9 = L.tileLayer(tilePath +"/nicfi/2025/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
 
-    var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-	//maxNativeZoom:15,
-        attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-    });
+        var basemaps = {"NICFI 2015-11->2016-05":nicfi_1, "NICFI 2016-05>2016-10":nicfi_2,"NICFI 2016-11->2017-05":nicfi_3,"NICFI 2017-05->2017-11":nicfi_4,"NICFI 2018-06->2018-10":nicfi_5, "NICFI 2018-11->2019-05":nicfi_6, "NICFI 2019-06->2019-11": nicfi_7, "NICFI 2019-11->2020-05":nicfi_8, "NICFI 2020-05->2020-11":nicfi_9, "Street":opMap, "Topo": topo, "Satellite":airImagery};
 
-    //var basemaps = {"Street":opMap, "Topo": topo, "aerial": airImagery};
-    var basemaps = {"NICFI 2015-11->2016-05":nicfi_1, "NICFI 2016-05>2016-10":nicfi_2,"NICFI 2016-11->2017-05":nicfi_3,"NICFI 2017-05->2017-11":nicfi_4,"NICFI 2018-06->2018-10":nicfi_5, "NICFI 2018-11->2019-05":nicfi_6, "NICFI 2019-06->2019-11": nicfi_7, "NICFI 2019-11->2020-05":nicfi_8, "NICFI 2020-05->2020-11":nicfi_9, "Street":opMap, "Topo": topo, "Satellite":airImagery};
+    }else if (highRes === "NAIP"){
+
+        var basemaps = {"Street":opMap, "Topo": topo, "aerial": airImagery};
+
+    }else{
+
+        var basemaps = {"Street":opMap, "Topo": topo, "aerial": airImagery};
+
+    }
 
     var myStyle = {"color": "white", "weight": 2, "opacity": 1, "fillOpacity" : 0};
 
@@ -135,11 +119,11 @@ function mapstuff() {
     for(let z = cat; z <= mapNumber; z++){
         let imagelayer0 = "rgbTC_" + z + "= L.tileLayer('"+ tilePath +"/rgbTC/" + Number(beginYear + z) + "/{z}/{x}/{y}.png', {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:14});"; //removed  ,maxZoom: 17, maxNativeZoom: "+listNum[0]+"});";
         let imagelayer1 = "rgb432_" + z + "= L.tileLayer('"+ tilePath +"/rgb432/" + Number(beginYear + z) + "/{z}/{x}/{y}.png', {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:14});";
-        //let imagelayer2 = "rgb543_" + z + "= L.tileLayer('"+ tilePath +"/rgb543/" + Number(beginYear + z) + "/{z}/{x}/{y}.png', {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:14});";
+        let imagelayer2 = "rgb543_" + z + "= L.tileLayer('"+ tilePath +"/rgb543/" + Number(beginYear + z) + "/{z}/{x}/{y}.png', {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:14});";
         let imagelayer3 = "rgb654_" + z + "= L.tileLayer('"+ tilePath +"/rgb654/" + Number(beginYear + z) + "/{z}/{x}/{y}.png', {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:14});";
         eval(imagelayer0);
         eval(imagelayer1);
-        //eval(imagelayer2);
+        eval(imagelayer2);
         eval(imagelayer3);
     }
 
@@ -159,8 +143,7 @@ function mapstuff() {
 
    for (let q = cat; q <= mapNumber; q++) {
         let maps = "map" + q + " = L.map('map" + q + "', {"
-            //+ "layers: [rgbTC_"+q+", rgb432_"+q+", rgb543_"+q+", rgb654_"+q+", roi"+q+",crosshair"+q+"],"
-            + "layers: [rgbTC_"+q+", rgb432_"+q+", rgb654_"+q+", roi"+q+",crosshair"+q+"],"
+            + "layers: [rgbTC_"+q+", rgb432_"+q+", rgb543_"+q+", rgb654_"+q+", roi"+q+",crosshair"+q+"],"
             + "center: center,"
             + "zoom: 5,"
             + "maxZoom: 18,"

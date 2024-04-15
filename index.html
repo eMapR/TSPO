@@ -37,17 +37,25 @@
 	const urlvalue = urlString.get("para");
         var db_path;
         var tilePath;
+        var highRes;
 	// Check if the parameter exists and split if necessary
 	if (urlvalue) {
 	    const urls = urlvalue.split(":");
             const projectName = urls[0]
             const dataName = urls[1]
-            console.log(projectName,dataName)
+            highRes = urls[2];
+            if (typeof highRes === 'undefined') {
+                 highRes = 'default';
+            }
+            console.log(projectName,dataName,highRes)
             db_path = "/var/www/emapr/pages/tools/tspo/neo_tspo/data/"+projectName+"/db/"+dataName+".db"
             tilePath = "/pages/tools/tspo/neo_tspo/data/"+projectName+"/tms"
 	    // Now you can use 'urls' array as needed
 	} else {
 	    console.log("Parameter 'para' not found in the URL");
+            db_path = "/var/www/emapr/pages/tools/tspo/neo_tspo/data/training/db/0010.db"
+            tilePath = "/pages/tools/servir/ltop_change_detection_validation/data/tms_10"
+            highRes = "NICFI";
 	}
 
 
