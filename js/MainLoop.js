@@ -63,9 +63,9 @@ function mapstuff() {
     var cat = 0;
     get_centroid()
 
-    mapNumber =  JSON.parse(res[0][3]).length-1
+    mapNumber =  JSON.parse(res[0]['json']).length-1
     console.log(mapNumber)
-    beginYear = JSON.parse(res[0][3])[0]['image_year']
+    beginYear = JSON.parse(res[0]['json'])[0]['image_year']
     console.log(beginYear)
 
     $('#mapid').remove();

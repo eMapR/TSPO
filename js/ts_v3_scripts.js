@@ -146,23 +146,24 @@ function getData(sessionInfo, specIndex, activeRedSpecIndex, activeGreenSpecInde
         })
 
 	for (i = 0; i < res_len; i++) {
-		if (sessionInfo.plotID === res[i][1]) {
-			var returnedData = eval(res[i][3]);
+		if (sessionInfo.plotID === res[i]['plotid']) {
+			var returnedData = eval(res[i]['json']);
 			//console.log(res[i])
-			var geometree = res[i][2];
+			//var geometree = res[i][2];
+			var geometree = res[i]['geo'];
 			// find yod in json string
-			let ind = res[i][3].search("yod");
+			let ind = res[i]['json'].search("yod");
 			let index = ind + 5;
 			let index1 = index + 4;
-			let yodi = res[i][3].slice(index, index1);
+			let yodi = res[i]['json'].slice(index, index1);
 			let long = "1"
 			let lat = "1"
-			if (res[i][4] === "null") {
-				$('#selectedYOD').text(yodi);
-			}
-			else {
-				$('#selectedYOD').text(res[i][4]);
-			}
+//			if (res[i][4] === "null") {
+//				$('#selectedYOD').text(yodi);
+//			}
+//			else {
+//				$('#selectedYOD').text(res[i][4]);
+//			}
 			$('#selectedAgent').text(res[i][5]);
 		}
 	}
@@ -853,10 +854,11 @@ $("#save").click(function () {
 			// ADD USER SELECTED ATTRIBUTES TO DATA LIST. THE DATA LIST WILL BE A ROW IN THE DATABASE TABLE
 			$(".dropdown div").each(function(){
 
-
 			        // GET USER INPUTED INFORMATION STRING
         			var attr = $(this).text().split('|');
+
 			        if (attr.length === 1 ){
+                                
 				}else if (attr.includes('text submitted')){
 					var dividx = $(this).children("span").attr("id").slice(-1);
 					var dirty = $("#spot"+dividx).children('textarea').val()
@@ -869,6 +871,8 @@ $("#save").click(function () {
 			})
 			lis_val.push(userID)
 			lis_val.push(timeDifference)
+                        //lis_val.push(res[i]['tracker'])
+                        //lis_val.push(res[i]['reEval'])
 
 
 			for (var elem = 0; elem < lis_val.length; elem++){
