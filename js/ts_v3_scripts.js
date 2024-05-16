@@ -871,9 +871,10 @@ $("#save").click(function () {
 			})
 			lis_val.push(userID)
 			lis_val.push(timeDifference)
-                        //lis_val.push(res[i]['tracker'])
-                        //lis_val.push(res[i]['reEval'])
-
+                        if (evenTab[0]['tracker'] !== undefined){
+                            lis_val.push(res[i]['tracker'])
+                            lis_val.push(res[i]['reEval'])
+                        }
 
 			for (var elem = 0; elem < lis_val.length; elem++){
 				if(lis_val[elem] == '' && elem<10){

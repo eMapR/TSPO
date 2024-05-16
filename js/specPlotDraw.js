@@ -116,7 +116,7 @@ function plotInt() {
 
     //define the width of the svg plot area
     //var w = 740,//
-    var h = w/4;
+    var h = w/3;
     $("#svg").attr("height",h.toString()+"px")
 
     //define the plot margins

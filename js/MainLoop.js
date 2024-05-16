@@ -85,17 +85,27 @@ function mapstuff() {
 
     if (highRes === "NICFI"){
 
-        var nicfi_1 = L.tileLayer(tilePath +"/nicfi/2017/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-        var nicfi_2 = L.tileLayer(tilePath +"/nicfi/2018/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-        var nicfi_3 = L.tileLayer(tilePath +"/nicfi/2019/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-        var nicfi_4 = L.tileLayer(tilePath +"/nicfi/2020/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-        var nicfi_5 = L.tileLayer(tilePath +"/nicfi/2021/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-        var nicfi_6 = L.tileLayer(tilePath +"/nicfi/2022/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-        var nicfi_7 = L.tileLayer(tilePath +"/nicfi/2023/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-        var nicfi_8 = L.tileLayer(tilePath +"/nicfi/2024/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
-        var nicfi_9 = L.tileLayer(tilePath +"/nicfi/2025/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
 
-        var basemaps = {"NICFI 2015-11->2016-05":nicfi_1, "NICFI 2016-05>2016-10":nicfi_2,"NICFI 2016-11->2017-05":nicfi_3,"NICFI 2017-05->2017-11":nicfi_4,"NICFI 2018-06->2018-10":nicfi_5, "NICFI 2018-11->2019-05":nicfi_6, "NICFI 2019-06->2019-11": nicfi_7, "NICFI 2019-11->2020-05":nicfi_8, "NICFI 2020-05->2020-11":nicfi_9, "Street":opMap, "Topo": topo, "Satellite":airImagery};
+
+        //var nicfi_1 = L.tileLayer(tilePath +"/nicfi/2017/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        //var nicfi_2 = L.tileLayer(tilePath +"/nicfi/2018/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        //var nicfi_3 = L.tileLayer(tilePath +"/nicfi/2019/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        //var nicfi_4 = L.tileLayer(tilePath +"/nicfi/2020/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        //var nicfi_5 = L.tileLayer(tilePath +"/nicfi/2021/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        //var nicfi_6 = L.tileLayer(tilePath +"/nicfi/2022/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        //var nicfi_7 = L.tileLayer(tilePath +"/nicfi/2023/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        //var nicfi_8 = L.tileLayer(tilePath +"/nicfi/2024/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        //var nicfi_9 = L.tileLayer(tilePath +"/nicfi/2025/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16}); 
+
+        //var basemaps = {"NICFI 2015-11->2016-05":nicfi_1, "NICFI 2016-05>2016-10":nicfi_2,"NICFI 2016-11->2017-05":nicfi_3,"NICFI 2017-05->2017-11":nicfi_4,"NICFI 2018-06->2018-10":nicfi_5, "NICFI 2018-11->2019-05":nicfi_6, "NICFI 2019-06->2019-11": nicfi_7, "NICFI 2019-11->2020-05":nicfi_8, "NICFI 2020-05->2020-11":nicfi_9, "Street":opMap, "Topo": topo, "Satellite":airImagery};
+
+
+        var nicfi_1 = L.tileLayer(tilePath +"/nicfi_2021_12/2021/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_2 = L.tileLayer(tilePath +"/nicfi_2022_04/2022/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_3 = L.tileLayer(tilePath +"/nicfi_2022_06/2022/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+        var nicfi_4 = L.tileLayer(tilePath +"/nicfi_2023_01/2023/{z}/{x}/{y}.png", {tms: true, opacity: 1, attribution: '',maxZoom: 18, maxNativeZoom:16});
+
+        var basemaps = {"NICFI 2021-12":nicfi_1, "NICFI 2022-04":nicfi_2,"NICFI 2022-06":nicfi_3,"NICFI 2023-01":nicfi_4, "Street":opMap, "Topo": topo, "Satellite":airImagery};
 
     }else if (highRes === "NAIP"){
 
