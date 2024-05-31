@@ -136,7 +136,6 @@ function getData(sessionInfo, specIndex, activeRedSpecIndex, activeGreenSpecInde
                 res = JSON.parse(data2);
                 // add plot ids to list plotInfo
                 res_len = Object.keys(res).length;
-                console.log(res)
         })
 
         var jqxhr2 = $.post( "./php/get_event_table.php",{path:db_path}, function(data) {
@@ -436,7 +435,6 @@ function demoKnob(i,spot) {
 
         // Create element node.
         const node = knob.node();
-        console.log(spot)
         // Add it to the DOM.
         const elem = document.getElementById(spot);
         	elem.appendChild(node);
@@ -843,7 +841,6 @@ $("#save").click(function () {
 			time2 = Date()
 			timeStamp2 = time2.slice(4,24)
                         var timeDifference = getTimeDifference(time1, time2);
-                        console.log(timeDifference)
 
 			// MAKE LIST OF ATTRIBUTE COLUMNS (WITH MATCHING INDEX OF VALUES) THIS WILL EXPAND TO MATCH THE NUMBER OF USET DEFINVE ATTRIBUTE BUTTONS
 			var lis_col = ["0","1","2","3"]
@@ -907,31 +904,51 @@ $("#save").click(function () {
 			}
 		}
 	}
-        console.log(lis_val)
+
         var holder = JSON.stringify(lis_val)
-        $.post("./php/addChartInfo.php",
-                {path:db_path,holds:holder},
-                //holder,
-                function(message, status) {
 
-        		// Assign handlers immediately after making the request,
-        		// and remember the jqxhr object for this request
-        		$.post( "./php/get_polygon_table.php",{path:db_path}, function(data) {
-                		data1 = "[" +data+ "]";
-                		data2 = data1.replace(/}{/g,"},{")
-                		res = JSON.parse(data2);
-                 		// add plot ids to list plotInfo
-                		res_len = Object.keys(res).length;
-        		})
+        // Function to check if any object contains a specific value at a given key
+        function containsValueAtKey(list, key, value) {
+            return list.some(obj => obj[key] === value);
+        }
 
-        		$.post( "./php/get_event_table.php",{path:db_path}, function(data) {
-                		data1 = "[" +data+ "]";
-                		data2 = data1.replace(/}{/g,"},{")
-                		evenTab = JSON.parse(data2);
-        		})
-        	});
-        listObj = []
-        $('.selected span').removeClass('glyphicon-none').addClass('glyphicon glyphicon-ok')
+	$.post("./php/addChartInfo.php", { path: db_path, holds: holder })
+	    .done(function(message, status) {
+	        // First request succeeded
+
+	        // Make the second request to get_polygon_table.php
+	        $.post("./php/get_polygon_table.php", { path: db_path })
+	            .done(function(data) {
+	                let data1 = "[" + data + "]";
+	                let data2 = data1.replace(/}{/g, "},{");
+	                let res = JSON.parse(data2);
+
+	                // Add plot ids to list plotInfo
+	                let res_len = Object.keys(res).length;
+	            })
+	            .fail(function(jqXHR, textStatus, errorThrown) {
+	                console.error("Error in get_polygon_table.php request:", textStatus, errorThrown);
+	            });
+
+	        // Make the third request to get_event_table.php
+	        $.post("./php/get_event_table.php", { path: db_path })
+	            .done(function(data) {
+	                let data1 = "[" + data + "]";
+	                let data2 = data1.replace(/}{/g, "},{");
+	                let evenTab = JSON.parse(data2);
+	            })
+	            .fail(function(jqXHR, textStatus, errorThrown) {
+	                console.error("Error in get_event_table.php request:", textStatus, errorThrown);
+	            });
+                if (containsValueAtKey(evenTab, 'plotId', lis_val[1])){
+                    $('.selected span').removeClass('glyphicon-none').addClass('glyphicon glyphicon-ok')
+                }
+	    })
+	    .fail(function(jqXHR, textStatus, errorThrown) {
+	        console.error("Error in addChartInfo.php request:", textStatus, errorThrown);
+	    });
+
+        //listObj = []
     });
 
     globalStretch();
@@ -991,7 +1008,6 @@ function setClass(els, className, fnName) {
 //--------------------------------------------------------------------------------------------------------
 $('#searchBtn').click(function(){
 	var searchString = $('#searchText').val()
-	console.log(searchString)
         if (searchString.length >= 3) {
         	$('#plotList li').each(function(e){
                 	$(this).removeClass('found');
