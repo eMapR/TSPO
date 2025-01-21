@@ -244,6 +244,12 @@ function appendPlots(sessionInfo) {
 
 			$("#plotList li").show()
 
+		}else if (examp == 2){
+
+			$("#plotList").append('<li style="display:none"><small><span class="glyphicon glyphicon-none" style="margin-right:5px"></span></small>' + plotInfo[ck] + '</li>');
+
+			$("#plotList li").show()
+
 		}else{
 
 			$("#plotList").append('<li style="display:none"><small><span class="glyphicon glyphicon-none" style="margin-right:5px"></span></small>' + plotInfo[ck] + '</li>');
@@ -880,9 +886,13 @@ $("#save").click(function () {
 				}
 			}
 
-			// find matches in 
+			this.disabled = true; // Disable the button
+			console.log('Button clicked, now disabled.');
+
+			// checks for current intres 
 			for (var check = 0; check < Object.values(evenTab).length; check++) {
 				// check for duplicate input in database
+				console.log(evenTab[check]['plotId'],sessionInfo.plotID,evenTab[check]['User_IP'],userID)
 				if (evenTab[check]['plotId'] === sessionInfo.plotID && evenTab[check]['User_IP'] == userID) {
 						if (confirm('There is already an event for this time series. Would you like to override it with this data? ')) {
 							remover_list = [sessionInfo.plotID, userID]
@@ -906,7 +916,7 @@ $("#save").click(function () {
 	}
 
         var holder = JSON.stringify(lis_val)
-
+	console.log(holder)
         // Function to check if any object contains a specific value at a given key
         function containsValueAtKey(list, key, value) {
             return list.some(obj => obj[key] === value);
@@ -947,6 +957,7 @@ $("#save").click(function () {
 	    .fail(function(jqXHR, textStatus, errorThrown) {
 	        console.error("Error in addChartInfo.php request:", textStatus, errorThrown);
 	    });
+            $('.selected span').removeClass('glyphicon-none').addClass('glyphicon glyphicon-ok')
 
         //listObj = []
     });
