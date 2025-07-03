@@ -19,9 +19,12 @@ if (isset($_POST['path'])) {
         $db = new SQLite3($variable_to_share);
 
         $event_table = $db->query("select * from eventTable");
-        while ($row = $event_table->fetchArray()) {
-            echo json_encode($row);
+        $rows = [];
+        while ($row = $event_table->fetchArray(SQLITE3_ASSOC)) {
+            $rows[] = $row;
         }
+        echo json_encode($rows);
+
     } else {
         echo "Database does not exist.";
     }

@@ -127,99 +127,86 @@ currentDomain["hasCustomizedXY"] = 0;
 
 function getData(sessionInfo, specIndex, activeRedSpecIndex, activeGreenSpecIndex, activeBlueSpecIndex, ylabel) {
 
+	let returnedData = null;
+	let geometree = null;
 
-        // Assign handlers immediately after making the request,
-        // and remember the jqxhr object for this request
-        var jqxhr1 = $.post( "./php/get_polygon_table.php", {path:db_path}, function(data) {
-                data1 = "[" +data+ "]";
-                data2 = data1.replace(/}{/g,"},{")
-                res = JSON.parse(data2);
-                // add plot ids to list plotInfo
-                res_len = Object.keys(res).length;
-        })
+	for (let i = 0; i < TSPO.DataLoader.state.res.length; i++) {
+	    const row = TSPO.DataLoader.state.res[i];
 
-        var jqxhr2 = $.post( "./php/get_event_table.php",{path:db_path}, function(data) {
-                data1 = "[" +data+ "]";
-                data2 = data1.replace(/}{/g,"},{")
-                evenTab = JSON.parse(data2);
-        })
+	    if (sessionInfo.plotID.toString() == row['plotid']) {
+	        console.log(1);
+	        returnedData = eval(row['json']);  // Only if you're sure this is safe
+	        console.log(returnedData);
+	        geometree = row['geo'];
 
-	for (i = 0; i < res_len; i++) {
-		if (sessionInfo.plotID === res[i]['plotid']) {
-			var returnedData = eval(res[i]['json']);
-			//console.log(res[i])
-			//var geometree = res[i][2];
-			var geometree = res[i]['geo'];
-			// find yod in json string
-			let ind = res[i]['json'].search("yod");
-			let index = ind + 5;
-			let index1 = index + 4;
-			let yodi = res[i]['json'].slice(index, index1);
-			let long = "1"
-			let lat = "1"
-//			if (res[i][4] === "null") {
-//				$('#selectedYOD').text(yodi);
-//			}
-//			else {
-//				$('#selectedYOD').text(res[i][4]);
-//			}
-			$('#selectedAgent').text(res[i][5]);
-		}
+	        // Extract YOD (year of detection) from JSON string
+	        const yodMatch = row['json'].match(/"yod":\s*(\d{4})/);
+	        const yodi = yodMatch ? yodMatch[1] : "N/A";
+
+	        // Set UI elements
+	        $('#selectedAgent').text(row['agent'] || "Unknown");
+	        $('#selectedYOD').text(yodi);
+	        break;
+	    }
+	}
+	console.log("Checking res[i]['plotid']: ", TSPO.DataLoader.state.res[i]?.plotid, "against sessionInfo.plotID: ", sessionInfo.plotID);
+	console.log("res[i] structure: ", TSPO.DataLoader.state.res[i]);
+
+	if (!returnedData || !geometree) {
+		console.error("Plot ID not found or invalid data");
+		return;
 	}
 
+	// Proceed using returnedData and geometree safely
+	$("#ImpliedYOD").text("Focus Year: " + returnedData[0].target_day);
+	$("#ImpliedYOD2").text("Focus Year: " + returnedData[0].target_day);
+	$("#ImpliedYOD3").text("Focus Year: " + returnedData[0].target_day);
 
-	$("#ImpliedYOD").text("Focus Year: " + returnedData[0].target_day)
-	$("#ImpliedYOD2").text("Focus Year: " + returnedData[0].target_day)
-	$("#ImpliedYOD3").text("Focus Year: " + returnedData[0].target_day)
+	// set globals
+	placed = geometree;
+	origData = returnedData;
+	n_chips = origData.length;
+	lastIndex = n_chips - 1;
+	data = { "Values": [] };
+	allData = { "Values": [] };
+	chipInfo = {
+		useThisChip: [],
+		canvasIDs: [],
+		imgIDs: [],
+		sxOrig: [],
+		syOrig: [],
+		sWidthOrig: [],
+		sxZoom: [],
+		syZoom: [],
+		sWidthZoom: [],
+		chipsInStrip: [],
+		year: [],
+		julday: [],
+		src: [],
+		sensor: []
+	};
+	yearList = [];
 
-
-	placed = geometree
-	origData = returnedData; //reset global
-	n_chips = origData.length; //reset global
-	lastIndex = n_chips - 1; //reset global
-	data = { "Values": [] }; //reset global
-	allData = { "Values": [] }; //reset global
-	chipInfo = { useThisChip: [], canvasIDs: [], imgIDs: [], sxOrig: [], syOrig: [], sWidthOrig: [], sxZoom: [], syZoom: [], sWidthZoom: [], chipsInStrip: [], year: [], julday: [], src: [], sensor: [] }; //reset global
-	yearList = []; //reset gobal
-
-	for (var i = 0; i < n_chips; i++) {
-
+	for (let i = 0; i < n_chips; i++) {
 		data.Values.push(parseSpectralData(origData, i));
-
 		yearList.push(origData[i].image_year);
-
-		var days = ('000' + origData[i].image_julday).slice(-3);
-
-		origData[i].url_tcb = '???' //`${chipRoot}/prj_${origData[i].project_id}/tc/plot_${origData[i].plotid}/plot_${origData[i].plotid}_${origData[i].image_year}_${days}.png`;     // JDB 2/18/19 for mock-up, this could be a place where we use the TMS urls
-
+		const days = ('000' + origData[i].image_julday).slice(-3);
+		origData[i].url_tcb = '???';
 	}
 
-	//set the default x domain max to the max year of the data, plus 1 to get a line at the end of the year
+	// set domain
 	var maxXdomain = d3.max(yearList) + 1;
-
 	var minXdomain = d3.min(yearList) - 1;
+	defaultDomain.year.max = currentDomain.year.max = maxXdomain;
+	defaultDomain.year.min = currentDomain.year.min = minXdomain;
 
-	defaultDomain.year.max = maxXdomain;
+	data = calcIndices(data);
+	rgbColor = scaledRGB(data, activeRedSpecIndex, activeGreenSpecIndex, activeBlueSpecIndex, stretch, 2, n_chips);
+	data = calcDecDate(data);
 
-	currentDomain.year.max = maxXdomain;
+	if (!currentDomain.hasCustomizedXY) updateStretch();
 
-	defaultDomain.year.min = minXdomain;
-
-	currentDomain.year.min = minXdomain;
-
-	data = calcIndices(data); //reset global - calculate the spectral indices
-
-	rgbColor = scaledRGB(data, activeRedSpecIndex, activeGreenSpecIndex, activeBlueSpecIndex, stretch, 2, n_chips); //reset global - calculate the rbg color
-
-	data = calcDecDate(data); //coul
-
-	if (!currentDomain.hasCustomizedXY) {
-
-		updateStretch();
-	}
-
-	// all point data - see the live working version
-	var allData = $.extend(true, {}, data);
+	allData = $.extend(true, {}, data);
 
 	loadVertex(sessionInfo);
 }
@@ -233,26 +220,26 @@ function appendPlots(sessionInfo) {
         plotheight = $("#svg").height()
         $("#plotList").attr("style","height:"+plotheight+"px")
 
-	plotInfo.sort((a,b) => a.length - b.length);
+	TSPO.DataLoader.state.plotInfo.sort((a,b) => a.length - b.length);
 	var examp = 0 
 
-	for (var ck = 0; ck < plotInfo.length; ck++) {
+	for (var ck = 0; ck < TSPO.DataLoader.state.plotInfo.length; ck++) {
 
 		if(examp == 1){
 
-			$("#plotList").append('<li id="plot'+ck.toString()+'" style="display:none"><small><span class="glyphicon glyphicon-none" style="margin-right:5px"></span></small>Exp: ' + plotInfo[ck] + '</li>');
+			$("#plotList").append('<li id="plot'+ck.toString()+'" style="display:none"><small><span class="glyphicon glyphicon-none" style="margin-right:5px"></span></small>Exp: ' + TSPO.DataLoader.state.plotInfo[ck] + '</li>');
 
 			$("#plotList li").show()
 
 		}else if (examp == 2){
 
-			$("#plotList").append('<li style="display:none"><small><span class="glyphicon glyphicon-none" style="margin-right:5px"></span></small>' + plotInfo[ck] + '</li>');
+			$("#plotList").append('<li style="display:none"><small><span class="glyphicon glyphicon-none" style="margin-right:5px"></span></small>' + TSPO.DataLoader.state.plotInfo[ck] + '</li>');
 
 			$("#plotList li").show()
 
 		}else{
 
-			$("#plotList").append('<li style="display:none"><small><span class="glyphicon glyphicon-none" style="margin-right:5px"></span></small>' + plotInfo[ck] + '</li>');
+			$("#plotList").append('<li style="display:none"><small><span class="glyphicon glyphicon-none" style="margin-right:5px"></span></small>' + TSPO.DataLoader.state.plotInfo[ck] + '</li>');
 
 			$("#plotList li").show()
 
@@ -262,17 +249,15 @@ function appendPlots(sessionInfo) {
 
 	var templist = []
 
-	for (var chk = 0; chk < Object.values(evenTab).length; chk++) {
-		//console.log(evenTab[chk]['User_IP'], userID)
-		if(evenTab[chk]['User_IP'] == userID){ 
-			templist.push(evenTab[chk][1])
+	for (var chk = 0; chk < Object.values(TSPO.DataLoader.state.evenTab).length; chk++) {
+		console.log(TSPO.DataLoader.state.evenTab[chk]['User_IP'], userID)
+		if(TSPO.DataLoader.state.evenTab[chk]['User_IP'] == userID){ 
+			templist.push(TSPO.DataLoader.state.evenTab[chk]['plotId'])
 		}
 	}
 
 	var listItems = $("#plotList li");
-
 	listItems.each(function(index){
-
 		let temp = $(this).text()
 
 		if(templist.includes(temp)) {
@@ -347,11 +332,11 @@ $("body").on("click", "#plotList li", function (e) {
 
         $("#plotList").attr("style","height:"+plotheight+"px")
 
-	nam = "#img"+$("#ImpliedYOD").text().slice(-4)
+	//nam = "#img"+$("#ImpliedYOD").text().slice(-4)
 
-	pos = $("#chip-gallery").scrollLeft() + $(nam).position().left-400
+	//pos = $("#chip-gallery").scrollLeft() + $(nam).position().left-400
 
-	$("#chip-gallery").animate({scrollLeft: pos})
+	//$("#chip-gallery").animate({scrollLeft: pos})
 
 });
 
@@ -744,226 +729,216 @@ $(".table li").click(function (e) {
 })
 
 
-
+function containsValueAtKey(list, key, value) {
+    return list.some(function(obj) {
+        return obj[key] === value;
+    });
+}
 //--------------------------------------------------------------------------------------------------------
 // HERE 
 function insertRow() {
-
+    // Get the display tab config and extract valid button keys and their value definitions
+    const displayTab = TSPO.DataLoader.state.displayTab;
     const displayTabKeys = Object.keys(displayTab[0]);
     const displayBtnNames = displayTabKeys.filter(key => key.length > 2);
     const displayValueNames = displayBtnNames.map(key => displayTab[0][key]).filter(Boolean);
-    const truedisplaylen = displayBtnNames.length;
 
-    const intersection = Object.keys(evenTab[0]).filter(element => displayBtnNames.includes(element));
-    const indxList = intersection.map(i => displayBtnNames.indexOf(i));
+    // Get attribution table and plot/session info
+    const evenTab = TSPO.DataLoader.state.evenTab;
+    const res = TSPO.DataLoader.state.res;
+    const plotId = sessionInfo.plotID;
+    const userIP = userID;
+
+    // Determine which attributes are common between display config and event table
+    const intersection = Object.keys(evenTab[0]).filter(k => displayBtnNames.includes(k));
+    const indxList = intersection.map(key => displayBtnNames.indexOf(key));
     const valueArr = indxList.map(n => displayValueNames[n]);
 
-    for (let ik = 0; ik < truedisplaylen; ik++) {
-        eval(`var ediSpot${ik};`);
-    }
+    // Placeholder for selected attribution values
+    const ediSpots = Array(valueArr.length).fill("");
 
-    $('#listOne').append('<div class="btn-group"><p id="edTile"></p></div>');
+    // Clear and set up container for the attribution UI
+    $('#listOne').empty().append('<div class="btn-group"><p id="edTile"></p></div>');
 
+    // Add buttons and populate with existing values if available for current plot/user
     for (let i = 0; i < intersection.length; i++) {
-        //const isCommentOrSpecial = ['Comment', 'Event_Year', 'Event_Name', 'Proportion1', 'Valid_Name'].includes(intersection[i]);
+        const fieldName = intersection[i];
+        // Add a button group for this attribute
+        const btnHtml = `
+            <div class="btn-group dropdown">
+                <button class="btn btn-default dropdown-toggle specPlotBtn" style="border-radius: 5px;">
+                    <div><strong>${fieldName}</strong>|<br><span id="selected${i}"></span></div>
+                </button>
+                <ul id="spot${i}" class="dropdown-content"></ul>
+            </div>`;
+        $('#listOne').append(btnHtml);
 
-
-        const buttonHtml = `<div class="btn-group dropdown">
-            <button class="btn btn-default dropdown-toggle specPlotBtn" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
-                <div><strong>${intersection[i]}</strong>|<br><span id="selected${i}"></span></div>
-            </button>
-            <ul id="spot${i}" class="dropdown-content"></ul>
-        </div>`;
-
-
-        const textareaHtml = `<div class="btn-group dropdown">
-            <button class="btn btn-default dropdown-toggle specPlotBtn" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
-                <div><strong>${intersection[i]}</strong>|<br><span id="selected${i}"></span></div>
-            </button>
-            <ul id="spot${i}" class="dropdown-content"><form id="usrform${i}"></form><textarea rows="4" cols="30" name="${intersection[i]}1" form="usrform" ></textarea></ul>
-        </div>`;
-
-
-        $('#listOne').append(buttonHtml);
-
-        // appends values if already attributed
-        for (let aa = 0; aa < evenTab.length; aa++) {
-            if (evenTab[aa]['plotId'] === sessionInfo.plotID && evenTab[aa]['User_IP'] == userID) {
-                $("#selected"+i).text(evenTab[aa][i + 4]);
-                eval(`var edSptBut = 'ediSpot'+i+' = evenTab[aa]['+i+' + 4]';`);
-                eval(edSptBut);
-             }
+        // If this plot already has a saved attribution from this user, show it
+        for (let row of evenTab) {
+            if (row.plotId == plotId && row.User_IP == userIP) {
+                const val = row[fieldName];
+                $(`#selected${i}`).text(val);
+                ediSpots[i] = val;
+            }
         }
-
     }
 
-
+    // Populate each dropdown/selector depending on the value type (text, dial, propbox, or options)
     for (let i = 0; i < valueArr.length; i++) {
         if (valueArr[i].includes('comment')) {
-            $(`#spot${i}`).append(`<form id="usrform${i}"></form><textarea rows="4" cols="30" name="${intersection[i]}1" form="usrform" style="width:100%"></textarea>`)	    
-        } else if (valueArr[i].includes('Dial')){
-            demoKnob(i,"spot"+i.toString());
-            //propBox(i);
-        } else if (valueArr[i].includes('Prop')){
-            //propBox(i,"spot"+i.toString());
-            const parentElement = document.getElementById("spot"+i.toString());
-            const propBoxInstance = new PropBox(parentElement,valueArr[i]);
-        }else{
-            const valueList = valueArr[i].split(', ');
-            valueList.forEach(val => $(`#spot${i}`).append(`<li id="${val}">${val}</li>`));
+            $(`#spot${i}`).append(`<form id="usrform${i}"></form><textarea rows="4" cols="30" name="${intersection[i]}1" form="usrform" style="width:100%"></textarea>`);
+        } else if (valueArr[i].includes('Dial')) {
+            demoKnob(i, `spot${i}`);
+        } else if (valueArr[i].includes('Prop')) {
+            const parent = document.getElementById(`spot${i}`);
+            new PropBox(parent, valueArr[i]);
+        } else {
+            const list = valueArr[i].split(', ');
+            list.forEach(val => $(`#spot${i}`).append(`<li id="${val}">${val}</li>`));
         }
     }
 
+    // Add the Save button
     $('#listOne').append('<button type="button" id="save">Save</button>');
 
-    for (let i = 0; i < displayBtnNames.length; i++) {
-        $(`#spot${i} li`).click(function(e) {
-            if (e.target.id !== "") {
-                eval(`ediSpot${i} = $(this).attr("id");`);
-                $(`#selected${i}`).text($(this).text());
+    // Handle user clicking on list items or editing textareas
+    for (let i = 0; i < valueArr.length; i++) {
+        $(`#spot${i} li`).click(function () {
+            const val = $(this).attr("id");
+            if (val) {
+                ediSpots[i] = val;
+                $(`#selected${i}`).text(val);
             }
         });
 
-        $(`#spot${i}`).mouseout(function(e) {
+        // Update selected value when user clicks an option
+        $(`#spot${i}`).mouseout(function (e) {
             if (e.currentTarget.id === `spot${i}` && e.target.localName === "textarea") {
-                eval(`ediSpot${i} = $("#spot${i} textarea").val();`);
+                ediSpots[i] = $(`#spot${i} textarea`).val();
                 $(`#selected${i}`).text("text submitted");
             }
         });
     }
 
-    time1 = Date()
-    timeStamp1 = time1.slice(4,24)
+    // Capture a timestamp for when the interaction started
+    time1 = Date();
+    timeStamp1 = time1.slice(4, 24);
 
-//--------------------------------------------------------------------------------------------------------
+	$("#save").click(function () {
+	    const match = TSPO.DataLoader.state.res.find(d => d.plotid === sessionInfo.plotID);
+	    if (!match) {
+	        alert("Plot not found. Cannot save.");
+	        return;
+	    }
 
-// save button
-$("#save").click(function () {
-	// here we loop the number plots. 
-	for (var i = 0; i < Object.keys(res).length; i++) {
-		// look for a condistion where the selected plot matches a plot in the plot id list
-		if (res[i][1] === sessionInfo.plotID) {
+	    const time2 = Date();
+	    const timeStamp2 = time2.slice(4, 24);
+	    const timeDifference = getTimeDifference(time1, time2);
 
-			time2 = Date()
-			timeStamp2 = time2.slice(4,24)
-                        var timeDifference = getTimeDifference(time1, time2);
+	    const lis_col = ["0", "1", "2", "3"];
+	    const lis_val = [sessionInfo.plotID, sessionInfo.plotID, timeStamp2, origData[0].target_day.toString()];
 
-			// MAKE LIST OF ATTRIBUTE COLUMNS (WITH MATCHING INDEX OF VALUES) THIS WILL EXPAND TO MATCH THE NUMBER OF USET DEFINVE ATTRIBUTE BUTTONS
-			var lis_col = ["0","1","2","3"]
-
-			// MAKE LIST OF ATTRIBUTE VALUES (WITH MATCHING INDEX OF COLUMNS)
-			var lis_val = [1, sessionInfo.plotID, timeStamp2, origData[0].target_day.toString()];
-
-			// ADD USER SELECTED ATTRIBUTES TO DATA LIST. THE DATA LIST WILL BE A ROW IN THE DATABASE TABLE
-			$(".dropdown div").each(function(){
-
-			        // GET USER INPUTED INFORMATION STRING
-        			var attr = $(this).text().split('|');
-
-			        if (attr.length === 1 ){
-                                
-				}else if (attr.includes('text submitted')){
-					var dividx = $(this).children("span").attr("id").slice(-1);
-					var dirty = $("#spot"+dividx).children('textarea').val()
-					var clean = DOMPurify.sanitize(dirty);
-					lis_val.push(clean)
-				}else{
-					lis_val.push(attr[1])
-				}
-
-			})
-			lis_val.push(userID)
-			lis_val.push(timeDifference)
-                        if (evenTab[0]['tracker'] !== undefined){
-                            lis_val.push(res[i]['tracker'])
-                            lis_val.push(res[i]['reEval'])
-                        }
-
-			for (var elem = 0; elem < lis_val.length; elem++){
-				if(lis_val[elem] == '' && elem<10){
-					alert("Hello, make sure you completed each attribute option.") 
-					return
-				}
-			}
-
-			this.disabled = true; // Disable the button
-			console.log('Button clicked, now disabled.');
-
-			// checks for current intres 
-			for (var check = 0; check < Object.values(evenTab).length; check++) {
-				// check for duplicate input in database
-				console.log(evenTab[check]['plotId'],sessionInfo.plotID,evenTab[check]['User_IP'],userID)
-				if (evenTab[check]['plotId'] === sessionInfo.plotID && evenTab[check]['User_IP'] == userID) {
-						if (confirm('There is already an event for this time series. Would you like to override it with this data? ')) {
-							remover_list = [sessionInfo.plotID, userID]
-                					var remover = JSON.stringify(remover_list)
-                					$.post("./php/removeRow.php",
-                        					//remover,
-                        					{path:db_path,rmr:remover},
-                        					function(message, status) {
-                                					console.log(message);
-                                					console.log(status);
-                                					}
-                        					);
-
-							continue
-						} else {
-							return
-						}
-				}
-			}
-		}
-	}
-
-        var holder = JSON.stringify(lis_val)
-	console.log(holder)
-        // Function to check if any object contains a specific value at a given key
-        function containsValueAtKey(list, key, value) {
-            return list.some(obj => obj[key] === value);
-        }
-
-	$.post("./php/addChartInfo.php", { path: db_path, holds: holder })
-	    .done(function(message, status) {
-	        // First request succeeded
-
-	        // Make the second request to get_polygon_table.php
-	        $.post("./php/get_polygon_table.php", { path: db_path })
-	            .done(function(data) {
-	                let data1 = "[" + data + "]";
-	                let data2 = data1.replace(/}{/g, "},{");
-	                let res = JSON.parse(data2);
-
-	                // Add plot ids to list plotInfo
-	                let res_len = Object.keys(res).length;
-	            })
-	            .fail(function(jqXHR, textStatus, errorThrown) {
-	                console.error("Error in get_polygon_table.php request:", textStatus, errorThrown);
-	            });
-
-	        // Make the third request to get_event_table.php
-	        $.post("./php/get_event_table.php", { path: db_path })
-	            .done(function(data) {
-	                let data1 = "[" + data + "]";
-	                let data2 = data1.replace(/}{/g, "},{");
-	                let evenTab = JSON.parse(data2);
-	            })
-	            .fail(function(jqXHR, textStatus, errorThrown) {
-	                console.error("Error in get_event_table.php request:", textStatus, errorThrown);
-	            });
-                if (containsValueAtKey(evenTab, 'plotId', lis_val[1])){
-                    $('.selected span').removeClass('glyphicon-none').addClass('glyphicon glyphicon-ok')
-                }
-	    })
-	    .fail(function(jqXHR, textStatus, errorThrown) {
-	        console.error("Error in addChartInfo.php request:", textStatus, errorThrown);
+	    $(".dropdown div").each(function () {
+	        const attr = $(this).text().split('|');
+	        if (attr.includes('text submitted')) {
+	            const dividx = $(this).children("span").attr("id").slice(-1);
+	            const dirty = $("#spot" + dividx).children('textarea').val();
+	            const clean = DOMPurify.sanitize(dirty);
+	            lis_val.push(clean);
+	        } else if (attr.length > 1) {
+	            lis_val.push(attr[1]);
+	        }
 	    });
-            $('.selected span').removeClass('glyphicon-none').addClass('glyphicon glyphicon-ok')
 
-        //listObj = []
-    });
+	    lis_val.push(userID);
+	    //lis_val.push(timeDifference);
+
+	    //if (TSPO.DataLoader.state.evenTab?.[0]?.tracker !== undefined) {
+	    //    lis_val.push(match.tracker);
+	    //    lis_val.push(match.reEval);
+	    //}
+
+	    // Check for missing values
+	    for (let i = 0; i < lis_val.length; i++) {
+	        if (lis_val[i] === '' && i < 10) {
+	            alert("Hello, make sure you completed each attribute option.");
+	            return;
+	        }
+	    }
+
+	    this.disabled = true;
+
+	    const existing = TSPO.DataLoader.state.evenTab.find(d =>
+	        d.plotId === sessionInfo.plotID && d.User_IP === userID
+	    );
+
+	    if (existing) {
+	        const confirmed = confirm('There is already an event for this time series. Override it?');
+	        if (!confirmed) return;
+
+	        const remover = JSON.stringify([sessionInfo.plotID, userID]);
+	        $.post("./php/removeRow.php", { path: db_path, rmr: remover }, function (msg, status) {
+	            console.log("Row removed:", msg, status);
+	        });
+	    }
+
+	    const holder = JSON.stringify(lis_val);
+	    console.log(holder)
+
+		const firstRow = TSPO.DataLoader.state.evenTab[0];
+		const numColumns = Object.keys(firstRow).length;
+		console.log("Type of numColumns:", typeof numColumns);
+		console.log("Type of holder.length:", typeof lis_val.length);
+		console.log("Strict equality check:", numColumns === lis_val.length);
+		console.log("Loose equality check:", numColumns == lis_val.length);
+		if (numColumns === lis_val.length) {
+		    console.log("numbers");
+		    console.log(numColumns);
+		} else {
+		    console.log("diff length");
+		    console.log(numColumns);
+		    console.log(lis_val.length);
+		}
+
+	    $.post("./php/addChartInfo.php", { path: db_path, holds: holder })
+	        .done(function () {
+	            // Reload polygon data
+			$.post("./php/get_polygon_table.php", { path: db_path }, null, 'json')
+			    .done(function(data) {
+			        console.log("Raw polygon data returned:", data);
+			        TSPO.DataLoader.state.res = data;
+			        TSPO.DataLoader.state.res_len = data.length;
+			    })
+			    .fail(function(jqXHR, textStatus, errorThrown) {
+			        console.error("Error in get_polygon_table.php request:", textStatus, errorThrown);
+			    });
+
+	            // Reload event data
+
+			$.post("./php/get_event_table.php", { path: db_path }, null, 'json')
+			    .done(function(data) {
+			        TSPO.DataLoader.state.evenTab = data;
+			        if (containsValueAtKey(data, 'plotId', lis_val[1])) {
+			            $('.selected span').removeClass('glyphicon-none').addClass('glyphicon glyphicon-ok');
+			        }
+			    })
+			    .fail(function(jqXHR, textStatus, errorThrown) {
+			        console.error("Error in get_event_table.php request:", textStatus, errorThrown);
+			    });
+
+	        })
+	        .fail(function (jqXHR, textStatus, errorThrown) {
+	            console.error("Error saving chart info:", textStatus, errorThrown);
+	        });
+
+	    $('.selected span').removeClass('glyphicon-none').addClass('glyphicon glyphicon-ok');
+
+	    globalStretch();
+	    $("#checkListSection").css("height", $("#chipGallerySection").height());
+	});
 
     globalStretch();
-    $("#checkListSection").css("height", $("#chipGallerySection").height())
+    $("#checkListSection").css("height", $("#chipGallerySection").height());
 }
 
 

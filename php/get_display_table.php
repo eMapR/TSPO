@@ -1,36 +1,22 @@
 <?php
-
-//include 'db_path.php';
-//$db = new SQLite3('../TSPdatabase0.db');
-
-
 if (isset($_POST['path'])) {
     $variable_to_share = $_POST['path'];
 
     if (file_exists($variable_to_share)) {
         $db = new SQLite3($variable_to_share);
 
-        $display_table = $db->query("select * from displayTable");
-        while ($row = $display_table->fetchArray()) {
-            $outstring .= json_encode($row);
-            echo json_encode($row);
+        $display_table = $db->query("SELECT * FROM displayTable");
+        $rows = [];
+        while ($row = $display_table->fetchArray(SQLITE3_ASSOC)) {
+            $rows[] = $row;
         }
+
+        // ✅ Send JSON response
+        echo json_encode($rows);
+
     } else {
-        echo "Database does not exist.";
+        // Optional: return an empty array instead of a string
+        echo json_encode([]);
     }
 }
-
-
-//if (isset($_POST['path'])) {
-//    $variable_to_share = $_POST['path'];
-
-//    $db = new SQLite3($variable_to_share);
-
-//    $display_table = $db->query("select * from displayTable");
-//    while ($row = $display_table->fetchArray()) {
-//        $outstring .= json_encode($row);
-//        echo json_encode($row);
-//    }
-//}
-
 ?>
