@@ -851,12 +851,12 @@ function insertRow() {
 	    });
 
 	    lis_val.push(userID);
-	    //lis_val.push(timeDifference);
+	    lis_val.push(timeDifference);
 
-	    //if (TSPO.DataLoader.state.evenTab?.[0]?.tracker !== undefined) {
-	    //    lis_val.push(match.tracker);
-	    //    lis_val.push(match.reEval);
-	    //}
+	    if (TSPO.DataLoader.state.evenTab?.[0]?.tracker !== undefined) {
+	        lis_val.push(match.tracker);
+	        lis_val.push(match.reEval);
+	    }
 
 	    // Check for missing values
 	    for (let i = 0; i < lis_val.length; i++) {
