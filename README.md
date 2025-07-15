@@ -54,7 +54,7 @@ Use the tspo\_expo/ folder as a template for your own project. It includes subfo
 
 #### 📜 Step-by-step Guide
 
-Use the [**GEE Download Guide**](#) to:
+Use the [**GEE Download Guide**](https://docs.google.com/document/d/1WHB4dLyNp7HPP0HzTNYDuahF72p4uu0iXMqxSVk8x1U/edit?usp=sharing) to:
 
 *   Export vector plots (GeoJSON)
     
@@ -78,7 +78,7 @@ Generate a local SQLite database using your GeoJSON and a config.json file.
 
 python 01_geojsonToDB.py <path/to/project_directory> <project_name>
 
-See the [**Database Setup Guide**](#) for detailed instructions.
+See the [**Database Setup Guide**](https://docs.google.com/document/d/1683P2U8Tjl44f7DtZCGS2aevfe6RxPncGUj4Dvv_5bk/edit?usp=sharing) for detailed instructions.
 
 #### 🌐 TMS (Tile Mapping Service) Creation
 
@@ -90,7 +90,7 @@ Example:
 
 python genTMS.py /full/path/to/data/tspo_expo/tms/ 1995 2024 9 16 "EPSG:4326"
 
-See the [**TMS Setup Guide**](#) for details.
+See the [**TMS Setup Guide**](https://docs.google.com/document/d/1So7F4NMLxInFoV7QiWdKFt7wowkbC6uPCpWl6Og-OLo/edit?usp=sharing) for details.
 
 ✅ Next Steps
 ------------
