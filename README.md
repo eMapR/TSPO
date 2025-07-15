@@ -34,7 +34,14 @@ Time Sync Plus (TS+)
 📁 Project Structure
 --------------------
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   bashCopyEdittspo_expo/  ├── db/          # SQLite databases (created from polygons)  ├── json/        # GeoJSON vector data exported from GEE  ├── tms/         # Tile Mapping Service (TMS) output from Landsat/NAIP imagery  ├── 00_config.json  ├── index.html   # Main TS+ web interface  ├── js/          # Client-side JavaScript scripts  ├── php/         # Backend logic (session, DB I/O)  └── ...   `
+tspo_expo/  
+├── db/          # SQLite databases (created from polygons)  
+├── json/        # GeoJSON vector data exported from GEE  
+├── tms/         # Tile Mapping Service (TMS) output from Landsat/NAIP imagery  
+├── index.html   # Main TS+ web interface  
+├── js/          # Client-side JavaScript scripts  
+├── php/         # Backend logic (session, DB I/O)  
+└── ...   `
 
 📦 Application Setup
 --------------------
@@ -69,7 +76,7 @@ You’ll need:
 
 Generate a local SQLite database using your GeoJSON and a config.json file.
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`bashCopyEditpython 01_geojsonToDB.py`  
+python 01_geojsonToDB.py <path/to/project_directory> <project_name>
 
 See the [**Database Setup Guide**](#) for detailed instructions.
 
@@ -77,11 +84,11 @@ See the [**Database Setup Guide**](#) for detailed instructions.
 
 Generate web tiles for Landsat or high-resolution imagery:
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`bashCopyEditpython genTMS.py`      
+python genTMS.py <rasterPath> <start_year> <end_year> <zoom_min> <zoom_max> <epsg>
 
 Example:
 
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   bashCopyEditpython genTMS.py ./tms/ 1995 2024 9 16 "EPSG:4326"   `
+python genTMS.py /full/path/to/data/tspo_expo/tms/ 1995 2024 9 16 "EPSG:4326"
 
 See the [**TMS Setup Guide**](#) for details.
 
