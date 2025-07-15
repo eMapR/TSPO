@@ -160,8 +160,8 @@ def observation_value_list(data,year):
 				templist.append(year)
 				#templist.append(values['id'])
 				try:
-					#templist.append(str(values['properties']['uniqID']))
-					templist.append(str(values['properties']['name']))
+					templist.append(str(values['properties']['uniqID']))
+					#templist.append(str(values['properties']['name']))
 				except KeyError:
 					templist.append(0)
 				try:
@@ -289,6 +289,7 @@ def observation_value_dict(startYear, end, data, yam):
             #print(i)
             print("here")
             print(pairs[0][0])
+            print(templistB[i])
             project = (
                 templistB[i][7],    #f"{i:05}",  #displayed plot id 
                 templistB[i][7],    # hidden plot id tracker

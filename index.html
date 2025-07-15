@@ -49,12 +49,12 @@
                  highRes = 'default';
             }
             console.log(projectName,dataName,highRes)
-            db_path = "/var/www/emapr/pages/tools/tspo/neo_tspo/data/"+projectName+"/db/"+dataName+".db"
-            tilePath = "/pages/tools/tspo/neo_tspo/data/"+projectName+"/tms"
+            db_path = "/vol/v1/TSPO/TSPO/data/"+projectName+"/db/"+dataName+".db"
+            tilePath = "./data/"+projectName+"/tms"
 	    // Now you can use 'urls' array as needed
 	} else {
 	    console.log("Parameter 'para' not found in the URL");
-            db_path = "/var/www/emapr/pages/tools/tspo/neo_tspo/data/training/db/0010.db"
+            db_path = "/vol/v1/TSPO/data/training/db/0010.db"
             tilePath = "/pages/tools/servir/ltop_change_detection_validation/data/tms_10"
             highRes = "NICFI";
 	}

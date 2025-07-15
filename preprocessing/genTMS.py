@@ -19,11 +19,17 @@ class TileProcessor:
         self.epsg = epsg
 
     def mosaic_files(self, files, bands, vrt_file):
-        # Corrected: use -separate and direct file input (no input_file_list)
         input_file = files[0]
-        bands_option = ' '.join(['-b ' + str(b) for b in bands])
-        cmd = f'gdalbuildvrt -q -separate {bands_option} {vrt_file} {input_file}'
-        print("Running:", cmd)  # For debugging
+        temp_files = []
+
+        for i, b in enumerate(bands):
+            temp_file = f"{vrt_file}_band{i+1}.tif"
+            cmd = f"gdal_translate -q -b {b} {input_file} {temp_file}"
+            subprocess.call(cmd, shell=True)
+            temp_files.append(temp_file)
+
+        cmd = f"gdalbuildvrt -q -separate {vrt_file} " + ' '.join(temp_files)
+        print("Running:", cmd)
         subprocess.call(cmd, shell=True)
 
     def process(self, cmd):
@@ -36,7 +42,7 @@ class TileProcessor:
 
     def get_band_list(self, fn):
         src = gdal.Open(fn, gdal.GA_ReadOnly)
-        return [list(range(i, i + 3)) for i in range(1, src.RasterCount, 3)]
+        return [list(range(i, i + 3)) for i in range(1, src.RasterCount+1, 3)]
 
     def make_dir(self, folder):
         if not os.path.exists(folder):
