@@ -1,7 +1,7 @@
 Time Sync Plus (TS+)
 ====================
 
-**Time Sync Plus (TS+)** is a web-based application for attributing land cover change using satellite imagery and spectral time series. It is designed to support image interpretation workflows used in forest disturbance monitoring, landscape change detection, and quality assurance.
+**Time Sync Plus (TS+)** is a web-based application for visualizing and attributing vector data using satellite imagery and spectral time series. It is designed to support image interpretation workflows used in monitoring landscape change detection, and quality assurance.
 
 🚀 Features
 -----------
@@ -12,9 +12,9 @@ Time Sync Plus (TS+)
     
 *   Custom attribution using dropdowns, sliders (Dial), proportional inputs (Prop), and comment fields
     
-*   Local storage and retrieval of plot-level attribution using SQLite
+*   Local or remote storage and retrieval of plot-level attribution using SQLite
     
-*   User session tracking based on IP address
+*   User session tracking based on IP address and user name
     
 *   Support for re-evaluation workflows (QA/QC and training)
     
@@ -34,7 +34,8 @@ Time Sync Plus (TS+)
 📁 Project Structure
 --------------------
 
-tspo_expo/  
+TSPO/  
+├── data/          # SQLite databases (created from polygons)  
 ├── db/          # SQLite databases (created from polygons)  
 ├── json/        # GeoJSON vector data exported from GEE  
 ├── tms/         # Tile Mapping Service (TMS) output from Landsat/NAIP imagery  
