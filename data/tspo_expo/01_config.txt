@@ -1,0 +1,11 @@
+{
+'polygonTable': ['plotid','tracker', 'reEval', 'user1', 'user2', 'geo', 'json'],
+'displayTable': {
+    'Probability_Forest_Loss': ['Prop', 'loss','Stable','Growth'],
+    'Image_Condition': ['Prop', 'Hinder','NAN','Helped'],
+    'Land_Class': ['Water','Barren','Forest', "Agland", "Urban","Shrubland","Grassland"],
+    'Confidence': ['Dial'],
+    'Comment': ['comment'],
+    'Valid_Name': ['comment']},
+'eventTable': ['plotId', 'Valid_Date', 'LT_YOD', 'Probability_Forest_Loss','Image_Condition', 'Land_Class', 'Valid_Name', 'Confidence','Comment', 'User_IP', 'user_elapsed_time']
+}

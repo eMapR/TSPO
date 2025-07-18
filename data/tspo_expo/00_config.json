@@ -1,0 +1,16 @@
+{
+  "project": "tspo-463118",
+  "startYear": 1995,
+  "startMonth": 6,
+  "startDay": 10,
+  "endYear": 2024,
+  "endMonth": 8,
+  "endDay": 20,
+  "featureCollection": "projects/tspo-463118/assets/yod",
+  "aoiBuffer": 250,
+  "bufferFeature": false,
+  "maskLabels": ["cloud", "shadow", "snow", "water"],
+  "exportFolder": "tspo_expo_assets",
+  "geoExport": "tspo_expo"
+}
+

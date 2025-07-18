@@ -98,4 +98,4 @@ See the [**TMS Setup Guide**](https://docs.google.com/document/d/1So7F4NMLxInFoV
 
 Once data and tiles are ready, launch the application by opening index.html in a browser, or configure it to run on a local server with PHP support.
 
-For advanced configuration, attribution logic, and developer notes, see the docs/ folder or explore the [**Application Usage Guide**](#).
+For advanced configuration, attribution logic, and developer notes, see the docs/ folder or explore the [**Application Usage Guide**](https://docs.google.com/document/d/1-R2A7ExPWgqbcEtv_K0S2JDQxJecmK7ruWzZ7Bcswwk/edit?usp=sharing).
