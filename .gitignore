@@ -10,10 +10,17 @@ node_modules/
 trash
 php/addChartInfo.log
 
-# Ignore contents of TMS and DB, but keep the folders
+# Ignore all contents of the folders
 data/tspo_expo/tms/*
-!data/tspo_expo/tms/.gitkeep
 data/tspo_expo/db/*
-!data/tspo_expo/db/.gitkeep
 data/tspo_expo/json/*
+
+# Un-ignore .txt files and .gitkeep placeholders
+!data/tspo_expo/tms/*.txt
+!data/tspo_expo/tms/.gitkeep
+
+!data/tspo_expo/db/*.txt
+!data/tspo_expo/db/.gitkeep
+
+!data/tspo_expo/json/*.txt
 !data/tspo_expo/json/.gitkeep
