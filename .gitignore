@@ -1,6 +1,17 @@
-node_modules	
-package.json  
-package-lock.json
+# Node modules — ignore all dependencies
+node_modules/
+
+# Optional: keep dependency definitions
+# (Remove these unless you *really* have a reason to ignore them)
+# package.json
+# package-lock.json
+
+# Local data/output
 trash
 php/addChartInfo.log
-data
+
+# Ignore contents of TMS and DB, but keep the folders
+data/tspo_expo/tms/*
+!data/tspo_expo/tms/.gitkeep
+data/tspo_expo/db/*
+!data/tspo_expo/db/.gitkeep
