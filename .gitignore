@@ -15,3 +15,5 @@ data/tspo_expo/tms/*
 !data/tspo_expo/tms/.gitkeep
 data/tspo_expo/db/*
 !data/tspo_expo/db/.gitkeep
+data/tspo_expo/json/*
+!data/tspo_expo/json/.gitkeep
