@@ -9,9 +9,10 @@ from datetime import date
 import json
 from multiprocessing import Pool
 
-projectDir = sys.argv[1]
+configPath = sys.argv[1]
 # Load configuration
-with open(projectDir+'/00_config.json', 'r') as f:
+#with open(projectDir+'/00_config.json', 'r') as f:
+with open(configPath, 'r') as f:
     CONFIG = json.load(f)
 
 ee.Authenticate()
@@ -81,44 +82,6 @@ def export_image_to_assets(image, filename, region, scale, description='Exported
     task.start()
     print(f"Export task started with ID: {task.id}")
     return task
-
-def process_image(image_id, feature_collection_id, crs, output_path):
-
-    def adjust_grid(feature):
-        return ee.Feature(feature.geometry().intersection(feature_collection_id,1))
-
-
-    # Load the image.
-    image = image_id
-
-    # Load the feature collection and filter.
-    tiles = ee.FeatureCollection(feature_collection_id).geometry().coveringGrid(crs,6500)
-    # Map the function over the feature collection
-    #tiles = ee.FeatureCollection(tiles.map(adjust_grid))
-    numberOfFeatures = tiles.size().getInfo()
-    print(numberOfFeatures)
-    # Define download parameters
-    params = {
-        'scale': 30,
-        'crs': crs,
-        'format': 'GeoTIFF'
-    }
-
-    # Function to clip the image by each feature
-    def clip_image(f):
-        return image.clip(f)
-
-    # Map over the tiles to clip the image
-    clipped_images = tiles.map(clip_image)
-    imageList = ee.ImageCollection(clipped_images).toList(numberOfFeatures)
-
-
-    # Create a tuple list for each image to be processed
-    args_list = [(i, imageList, params, output_path) for i in range(numberOfFeatures)]
-
-    # Use multiprocessing.Pool to download images in parallel
-    with Pool(25) as pool:
-        pool.map(download_image, args_list)
 
 
 def process_band_name(e):

@@ -3,7 +3,7 @@ Time Sync Plus (TS+)
 
 **Time Sync Plus (TS+)** is a web-based application for visualizing and attributing vector data using satellite imagery and spectral time series. It is designed to support image interpretation workflows used in monitoring landscape change detection, and quality assurance.
 
-🚀 Features
+Features
 -----------
 
 *   Interactive plot-based interpretation of Landsat time series
@@ -19,7 +19,7 @@ Time Sync Plus (TS+)
 *   Support for re-evaluation workflows (QA/QC and training)
     
 
-🧰 Technologies Used
+Technologies Used
 --------------------
 
 *   **Frontend**: HTML, CSS (Bootstrap), JavaScript (jQuery, D3, Leaflet)
@@ -31,7 +31,7 @@ Time Sync Plus (TS+)
 *   **Data Processing**: Python (with GDAL and Earth Engine API)
     
 
-📁 Project Structure
+Project Structure
 --------------------
 
 TSPO/  
@@ -44,7 +44,7 @@ TSPO/
 ├── php/         # Backend logic (session, DB I/O)  
 └── ...   `
 
-📦 Application Setup
+Application Setup
 --------------------
 
 ### 1\. Sample Project
@@ -53,7 +53,7 @@ Use the tspo\_expo/ folder as a template for your own project. It includes subfo
 
 ### 2\. Getting Data from Google Earth Engine (GEE)
 
-#### 📜 Step-by-step Guide
+#### Step-by-step Guide
 
 Use the [**GEE Download Guide**](https://docs.google.com/document/d/1WHB4dLyNp7HPP0HzTNYDuahF72p4uu0iXMqxSVk8x1U/edit?usp=sharing) to:
 
@@ -73,7 +73,7 @@ You’ll need:
 
 ### 3\. Processing Data
 
-#### 🗂️ Database Creation
+#### Database Creation
 
 Generate a local SQLite database using your GeoJSON and a config.json file.
 
@@ -81,7 +81,7 @@ python 01_geojsonToDB.py <path/to/project_directory> <project_name>
 
 See the [**Database Setup Guide**](https://docs.google.com/document/d/1683P2U8Tjl44f7DtZCGS2aevfe6RxPncGUj4Dvv_5bk/edit?usp=sharing) for detailed instructions.
 
-#### 🌐 TMS (Tile Mapping Service) Creation
+#### TMS (Tile Mapping Service) Creation
 
 Generate web tiles for Landsat or high-resolution imagery:
 
@@ -93,7 +93,7 @@ python genTMS.py /full/path/to/data/tspo_expo/tms/ 1995 2024 9 16 "EPSG:4326"
 
 See the [**TMS Setup Guide**](https://docs.google.com/document/d/1So7F4NMLxInFoV7QiWdKFt7wowkbC6uPCpWl6Og-OLo/edit?usp=sharing) for details.
 
-✅ Next Steps
+ Next Steps
 ------------
 
 Once data and tiles are ready, launch the application by opening index.html in a browser, or configure it to run on a local server with PHP support.
