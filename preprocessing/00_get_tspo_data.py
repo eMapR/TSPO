@@ -176,23 +176,45 @@ def main(startYear):
     featureValues = [0,1,2,3,4,5,6,7,8,9]
     #featureCol = "projects/ee-msime-ensemble-inputs/assets/ensembleInterpPoints_1000Per6Stratum_Laos"
     featureCol = CONFIG['featureCollection']
-    featureKey = 'name'
     
     endYear = CONFIG['endYear']
     aoiBuffer = CONFIG['aoiBuffer']
-    buffer_featrue = CONFIG['bufferFeature']
 
-    if buffer_featrue:
-        # Assuming featureValues and other required variables are defined earlier in the script
-        aoi = ee.FeatureCollection(featureCol) \
-            .geometry() \
-            .buffer(aoiBuffer)
+    if CONFIG['featureColumn']:
+        featureColumn = CONFIG['featureColumn']
+        featureValue = CONFIG['featureValue']
+    
+
+        if CONFIG['bufferFeature']:
+            buffer_featrue = CONFIG['bufferFeature']
+            # Assuming featureValues and other required variables are NOT defined earlier in the process
+            aoi = ee.FeatureCollection(featureCol) \
+                .filter(ee.Filter.eq(featureColumn,featureValue)) \
+                .geometry() \
+                .buffer(aoiBuffer)
+        else:
+            # Assuming featureValues and other required variables are NOT defined earlier in the process
+            print(featureCol,featureValue)
+            aoi = ee.FeatureCollection(featureCol) \
+                .filter(ee.Filter.eq(featureColumn,featureValue)) \
+                .geometry() \
+                .bounds() \
+                .buffer(aoiBuffer)
+
     else:
-        # Assuming featureValues and other required variables are defined earlier in the script
-        aoi = ee.FeatureCollection(featureCol) \
-            .geometry() \
-            .bounds() \
-            .buffer(aoiBuffer)
+
+        if CONFIG['bufferFeature']:
+            buffer_featrue = CONFIG['bufferFeature']
+            # Assuming featureValues and other required variables are defined earlier in the process
+            aoi = ee.FeatureCollection(featureCol) \
+                .geometry() \
+                .buffer(aoiBuffer)
+        else:
+            # Assuming featureValues and other required variables are defined earlier in the process
+            aoi = ee.FeatureCollection(featureCol) \
+                .geometry() \
+                .bounds() \
+                .buffer(aoiBuffer)
 
     composite_params = {
         "start_date": date(startYear, startMonth,startDay),
@@ -247,44 +269,91 @@ def main(startYear):
     rgb543 = annualSR.map(sr_visualize543).toBands().clip(aoi).unmask()
     rgb432 = annualSR.map(sr_visualize432).toBands().clip(aoi).unmask()
 
-    # Call the function
-    task = export_image_to_assets(
-        image=rgbTC,
-        filename= "rgbTC",
-        region=aoi,
-        scale=30,
-        description="rgbTC",
-        pyramiding_policy='MEAN'
-    )
+    if CONFIG['jsonOnly']:
 
-    # Call the function
-    task = export_image_to_assets(
-        image=rgb654,
-        filename= "rgb654",
-        region=aoi,
-        scale=30,
-        description="rgb654",
-        pyramiding_policy='MEAN'
-    )
-    # Call the function
-    task = export_image_to_assets(
-        image=rgb543,
-        filename= "rgb543",
-        region=aoi,
-        scale=30,
-        description="rgb543",
-        pyramiding_policy='MEAN'
-    )
-    # Call the function
-    task = export_image_to_assets(
-        image=rgb432,
-        filename= "rgb432",
-        region=aoi,
-        scale=30,
-        description="rgb432",
-        pyramiding_policy='MEAN'
-    )
+        task = export_featurecollection_to_drive(summary, filename=CONFIG['geoExport'], folder=CONFIG['exportFolder'])
 
-    task = export_featurecollection_to_drive(summary, filename=CONFIG['geoExport'], folder=CONFIG['exportFolder'])
+    elif CONFIG['imagesOnly']:
+
+        # Call the function
+        task = export_image_to_assets(
+            image=rgbTC,
+            filename= "rgbTC",
+            region=aoi,
+            scale=30,
+            description="rgbTC",
+            pyramiding_policy='MEAN'
+        )
+
+        # Call the function
+        task = export_image_to_assets(
+            image=rgb654,
+            filename= "rgb654",
+            region=aoi,
+            scale=30,
+            description="rgb654",
+            pyramiding_policy='MEAN'
+        )
+        # Call the function
+        task = export_image_to_assets(
+            image=rgb543,
+            filename= "rgb543",
+            region=aoi,
+            scale=30,
+            description="rgb543",
+            pyramiding_policy='MEAN'
+        )   
+        # Call the function
+        task = export_image_to_assets(
+            image=rgb432,
+            filename= "rgb432",
+            region=aoi,
+            scale=30,
+            description="rgb432",
+            pyramiding_policy='MEAN'
+        )
+
+    else:
+
+        task = export_featurecollection_to_drive(summary, filename=CONFIG['geoExport'], folder=CONFIG['exportFolder'])
+
+        # Call the function
+        task = export_image_to_assets(
+            image=rgbTC,
+            filename= "rgbTC",
+            region=aoi,
+            scale=30,
+            description="rgbTC",
+            pyramiding_policy='MEAN'
+        )
+
+        # Call the function
+        task = export_image_to_assets(
+            image=rgb654,
+            filename= "rgb654",
+            region=aoi,
+            scale=30,
+            description="rgb654",
+            pyramiding_policy='MEAN'
+        )
+        # Call the function
+        task = export_image_to_assets(
+            image=rgb543,
+            filename= "rgb543",
+            region=aoi,
+            scale=30,
+            description="rgb543",
+            pyramiding_policy='MEAN'
+        )   
+        # Call the function
+        task = export_image_to_assets(
+            image=rgb432,
+            filename= "rgb432",
+            region=aoi,
+            scale=30,
+            description="rgb432",
+            pyramiding_policy='MEAN'
+        )
+
 
 main(CONFIG['startYear'])

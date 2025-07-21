@@ -7,10 +7,14 @@
   "endMonth": 8,
   "endDay": 20,
   "featureCollection": "projects/tspo-463118/assets/yod",
+  "featureColumn": false, 
+  "featureValue": false, 
   "aoiBuffer": 250,
   "bufferFeature": false,
   "maskLabels": ["cloud", "shadow", "snow", "water"],
   "exportFolder": "tspo_expo_assets",
-  "geoExport": "tspo_expo"
+  "geoExport": "tspo_expo",
+  "geojson_only": true,
+  "images_only": true,  
 }
 
