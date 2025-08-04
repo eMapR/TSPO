@@ -39,6 +39,7 @@ TSPO/
 ├── db/          # SQLite databases (created from polygons)  
 ├── json/        # GeoJSON vector data exported from GEE  
 ├── tms/         # Tile Mapping Service (TMS) output from Landsat/NAIP imagery  
+├── fromGEE/     # Landing point for data from Goolge Earth Engine  
 ├── index.html   # Main TS+ web interface  
 ├── js/          # Client-side JavaScript scripts  
 ├── php/         # Backend logic (session, DB I/O)  

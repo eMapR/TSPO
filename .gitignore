@@ -14,6 +14,7 @@ php/addChartInfo.log
 data/tspo_expo/tms/*
 data/tspo_expo/db/*
 data/tspo_expo/json/*
+data/tspo_expo/fromGEE/*
 
 # Un-ignore .txt files and .gitkeep placeholders
 !data/tspo_expo/tms/*.txt
@@ -24,6 +25,9 @@ data/tspo_expo/json/*
 
 !data/tspo_expo/json/*.txt
 !data/tspo_expo/json/.gitkeep
+
+!data/tspo_expo/fromGEE/*.txt
+!data/tspo_expo/fromGEE/.gitkeep
 
 data/tspo_expo/00_config_peder.json
 preprocessing/run_batch.sh
