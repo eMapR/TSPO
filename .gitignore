@@ -27,3 +27,5 @@ data/tspo_expo/json/*
 
 data/tspo_expo/00_config_peder.json
 preprocessing/run_batch.sh
+
+data/peder

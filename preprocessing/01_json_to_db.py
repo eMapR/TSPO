@@ -160,8 +160,8 @@ def observation_value_list(data,year):
 				templist.append(year)
 				#templist.append(values['id'])
 				try:
-					templist.append(str(values['properties']['uniqID']))
-					#templist.append(str(values['properties']['name']))
+					#templist.append(str(values['properties']['uniqID']))
+					templist.append(str(values['properties']['AOI_PSU']))
 				except KeyError:
 					templist.append(0)
 				try:
@@ -196,7 +196,7 @@ def observation_value_dict(startYear, end, data, yam):
     TimeSync and the tables want .  """
 
     lastYear = findEndYear(data)
-    #print("lastYear",lastYear)
+    print("lastYear",lastYear)
 
     sql_list = sql_input_list(yam)
     fieldnames = sql_list[2]
@@ -241,8 +241,9 @@ def observation_value_dict(startYear, end, data, yam):
         #information for all polygons for one year pre loop. 
         for i in range(end): # loops to the number of features 
             observation_data = dictionary_template.copy()
-            #print(templistB[i][7])
-            #print(i)
+            #print(templistB[i])
+            print(end)
+            print(i)
             observation_data['b1'] = templistB[i][0]
             observation_data['b2'] = templistB[i][1]
             observation_data['b3'] = templistB[i][2]
@@ -352,7 +353,20 @@ def main():
     listOfYears.sort() 
     startYear = int(listOfYears[0][:4]) 
     endYear= int(listOfYears[-1][:4])
-    end = len(data['features'])
+    # Create the list of expected keys
+    required_keys = [
+        f"{year}_B{band}" for year in range(startYear, endYear + 1)
+        for band in [1, 2, 3, 4, 5, 7]
+    ]
+
+    # Count only features that have all required keys
+    valid_features = [
+        feature for feature in data['features']
+        if all(key in feature['properties'] for key in required_keys)
+    ]
+
+    end = len(valid_features)
+    print(end)
 #-------------------
 
     obser_val_dict = observation_value_dict(startYear, end, data, yam) 
@@ -377,9 +391,6 @@ def main():
         else:
             print("Error1! cannot create the database connection.")
     for i, e in zip(tablenames, fieldNames):
-        print(i)
-        print(e)
-        print(type((eval(i))))
         if len(eval(i)) >= 2:
             
             main = 'INSERT INTO '+i+ '('+e+')  VALUES'+eval(i)+'; '
