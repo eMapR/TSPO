@@ -62,9 +62,9 @@ Use the [**GEE Download Guide**](https://docs.google.com/document/d/1WHB4dLyNp7H
 *   Export multi-band annual Landsat composites (RGB654, RGB543, RGB432, RGBTC)
     
 
-You’ll need:
+In the GEE download guide above, you'll get instructions to set up: 
 
-*   Earth Engine API installed
+*   Earth Engine API 
     
 *   ltgee package
     
